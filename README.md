@@ -1,73 +1,39 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Daily Work Plan
+``` 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This document outlines the tasks planned for each day.
 
-## Description
+## Week 1
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Sprint 7-8 Aug: [Date: 19-30 Aug 2024]
+- [19-30 Aug] Task 1: start project and adjust structure
+- [19-30 Aug] Task 2: <owner> Api login
+- [19-30 Aug] Task 3: <owner> Api forgot password
+- [19-30 Aug] Task 4: from infomation for register of POS
 
-## Installation
+### Sprint 9-10 Aug: [Date: 2-13 Sep 2024]
+- [2-13 Sep] Task 1: <owner>หน้าเพิ่มรายการสินค้า
+                    (หน้ากรอกชื่อสินค้า,หน้ากรอกรายละเอียดสินค้า,อัพโหลดรูปภาพสินค้า,กรอกราคาสินค้า,สรุปรายการสินค้า)
 
-```bash
-$ yarn install
+### Sprint 11 Sep: [Date: 16-20 Sep 2024]
+- [16-20 Sep] Task 1: <owner> List product view page
+- [23-27 Sep] Task 2: <owner> หน้าหมวดหมู่รายการสินค้า
+                              (หน้ากรอกชื่อหมวดหมู่,หน้าเลือกเมนูที่ต้องการเพิ่ม,หน้าสรุปรายการหมวดหมู่)
+
+### Sprint 13 Oct: [Date: 30 Sep - 4 Oct 2024]
+- [30 Sep - 4 Oct] Task 1: <owner> หน้าตัวเลือกรายการสินค้า
+                          (หน้ากรอกชื่อตัวเลือก,หน้าเพิ่ม choice ตัวเลือก, pop up add choice,หน้าเลือก menu ที่ใช้ตัวเลือก)
+- [30 Sep - 4 Oct] Task 2: <owner> เพิ่ม ลบ แก้ไข รายการขายสินค้า
+
+### Sprint 14-15 Oct: [Date: 21-25 Oct 2024]
+- [21-25 Oct] Task 1: <customer>  ดูรายละเอียดของสินค้า 
+
+
+
+## Notes
+- Adjust the tasks according to the project's progress.
+- Keep track of the time spent on each task for better time management.
+- Regularly review and update this plan as the project evolves.
 ```
 
-## Running the app
-
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
