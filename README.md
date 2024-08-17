@@ -1,10 +1,7 @@
 
 ## Daily Work Plan
-``` 
 
 This document outlines the tasks planned for each day.
-
-## Week 1
 
 ### Sprint 7-8 Aug: [Date: 19-30 Aug 2024]
 - [19-30 Aug] Task 1: start project and adjust structure
@@ -35,5 +32,5 @@ This document outlines the tasks planned for each day.
 - Adjust the tasks according to the project's progress.
 - Keep track of the time spent on each task for better time management.
 - Regularly review and update this plan as the project evolves.
-```
+
 
