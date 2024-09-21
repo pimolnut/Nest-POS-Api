@@ -1,0 +1,29 @@
+### Create Order
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "customer_id": 123,
+  "order_date": "2023-09-16T08:00:00Z",
+  "total_price": 500,
+  "queue_number": 1,
+  "status": "processing",
+  "cancel_status": "ยังไม่คืนเงิน"
+}
+
+### Get All Orders
+GET http://localhost:3000/orders
+
+### Get Order by ID
+GET http://localhost:3000/orders/1
+
+### Update Order
+PATCH http://localhost:3000/orders/1
+Content-Type: application/json
+
+{
+  "status": "completed"
+}
+
+### Delete Order
+DELETE http://localhost:3000/orders/1
