@@ -3,7 +3,7 @@ import { OrderService } from './order.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
-import { CancelStatus } from './dto/create-order.dto'; 
+import { CancelStatus } from './dto/create-order/create-order.dto'; 
 
 const mockOrderRepository = {
   findOneBy: jest.fn(),
