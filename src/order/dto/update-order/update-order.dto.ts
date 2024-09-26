@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsOptional, IsString, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
-import { CancelStatus } from './create-order.dto';
+import { CancelStatus } from '../create-order/create-order.dto';
 
 export class UpdateOrderDto {
   @IsInt()
