@@ -1,0 +1,21 @@
+### Register New Owner
+POST http://localhost:3000/owners/register
+Content-Type: application/json
+
+{
+  "owner_name": "FlukeloveMemee",
+  "contact_info": "+6696849768",
+  "email": "pos@gmail.com",
+  "password": "password123"
+}
+
+### Login Owner
+POST http://localhost:3000/owners/login
+Content-Type: application/json
+
+{
+  "email": "pos@gmail.com",
+  "password": "password123"
+}
+
+
