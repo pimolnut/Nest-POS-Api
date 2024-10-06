@@ -1,4 +1,10 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { OwnerService } from './owner.service';
 import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
@@ -9,11 +15,13 @@ export class OwnerController {
 
   @Post('register')
   async register(@Body() createOwnerDto: CreateOwnerDto) {
-    const existingOwner = await this.ownerService.findByEmail(createOwnerDto.email);
+    const existingOwner = await this.ownerService.findByEmail(
+      createOwnerDto.email,
+    );
     if (existingOwner) {
       throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
     }
-    
+
     return this.ownerService.create(createOwnerDto);
   }
 

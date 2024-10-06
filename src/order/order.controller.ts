@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Res,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order/create-order.dto';
@@ -9,13 +20,13 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED) 
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(createOrderDto);
   }
 
   @Get()
-  @HttpCode(HttpStatus.OK) 
+  @HttpCode(HttpStatus.OK)
   async findAll() {
     return this.orderService.findAll();
   }
@@ -24,27 +35,37 @@ export class OrderController {
   async findOne(@Param('id') id: string, @Res() res: Response) {
     const order = await this.orderService.findOne(+id);
     if (!order) {
-      return res.status(HttpStatus.NOT_FOUND).json({ message: 'Order not found' });
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ message: 'Order not found' });
     }
     return res.status(HttpStatus.OK).json(order);
   }
 
   @Patch(':id')
-  @HttpCode(HttpStatus.OK) 
-  async update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto, @Res() res: Response) {
+  @HttpCode(HttpStatus.OK)
+  async update(
+    @Param('id') id: string,
+    @Body() updateOrderDto: UpdateOrderDto,
+    @Res() res: Response,
+  ) {
     const order = await this.orderService.update(+id, updateOrderDto);
     if (!order) {
-      return res.status(HttpStatus.NOT_FOUND).json({ message: 'Order not found' });
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ message: 'Order not found' });
     }
     return res.status(HttpStatus.OK).json(order);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT) 
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string, @Res() res: Response) {
     const order = await this.orderService.findOne(+id);
     if (!order) {
-      return res.status(HttpStatus.NOT_FOUND).json({ message: 'Order not found' });
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ message: 'Order not found' });
     }
     await this.orderService.remove(+id);
     return res.status(HttpStatus.NO_CONTENT).send();

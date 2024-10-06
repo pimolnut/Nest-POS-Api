@@ -8,9 +8,9 @@ describe('OwnerController', () => {
 
   // Mock OwnerService
   const mockOwnerService = {
-    create: jest.fn(),               // mock ฟังก์ชัน create
-    login: jest.fn(),                // mock ฟังก์ชัน login
-    findByEmail: jest.fn(),          // mock ฟังก์ชัน findByEmail
+    create: jest.fn(), // mock ฟังก์ชัน create
+    login: jest.fn(), // mock ฟังก์ชัน login
+    findByEmail: jest.fn(), // mock ฟังก์ชัน findByEmail
   };
 
   beforeEach(async () => {
@@ -19,7 +19,7 @@ describe('OwnerController', () => {
       providers: [
         {
           provide: OwnerService,
-          useValue: mockOwnerService,  // ใช้ mock service แทนตัวจริง
+          useValue: mockOwnerService, // ใช้ mock service แทนตัวจริง
         },
       ],
     }).compile();
@@ -41,11 +41,11 @@ describe('OwnerController', () => {
       password: 'password123',
     };
 
-    mockOwnerService.findByEmail.mockResolvedValue(null);  // mock ให้ findByEmail คืนค่าเป็น null (แสดงว่าไม่มี user นี้)
-    
-    await controller.register(dto);  // เรียก controller register
-    
-    expect(service.create).toHaveBeenCalledWith(dto);  // ตรวจสอบว่า service.create ถูกเรียกด้วย DTO ที่ถูกต้อง
+    mockOwnerService.findByEmail.mockResolvedValue(null); // mock ให้ findByEmail คืนค่าเป็น null (แสดงว่าไม่มี user นี้)
+
+    await controller.register(dto); // เรียก controller register
+
+    expect(service.create).toHaveBeenCalledWith(dto); // ตรวจสอบว่า service.create ถูกเรียกด้วย DTO ที่ถูกต้อง
   });
 
   // ทดสอบกรณีที่อีเมลมีอยู่แล้ว
@@ -57,8 +57,10 @@ describe('OwnerController', () => {
       password: 'password123',
     };
 
-    mockOwnerService.findByEmail.mockResolvedValue(dto);  // mock ให้ findByEmail คืนค่าเป็น DTO (แสดงว่ามี user นี้แล้ว)
-    
-    await expect(controller.register(dto)).rejects.toThrowError('Email already exists');  // ตรวจสอบว่ามีการ throw error
+    mockOwnerService.findByEmail.mockResolvedValue(dto); // mock ให้ findByEmail คืนค่าเป็น DTO (แสดงว่ามี user นี้แล้ว)
+
+    await expect(controller.register(dto)).rejects.toThrowError(
+      'Email already exists',
+    ); // ตรวจสอบว่ามีการ throw error
   });
 });

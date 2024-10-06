@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { CancelStatus } from '../dto/create-order/create-order.dto'; 
+import { CancelStatus } from '../dto/create-order/create-order.dto';
 
 @Entity()
 export class Order {

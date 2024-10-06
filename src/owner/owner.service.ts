@@ -1,7 +1,11 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Owner } from './entities/owner/owner.entity';  // ตรวจสอบว่าไฟล์ entity มีเส้นทางถูกต้อง
+import { Owner } from './entities/owner/owner.entity'; // ตรวจสอบว่าไฟล์ entity มีเส้นทางถูกต้อง
 import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
@@ -22,12 +26,12 @@ export class OwnerService {
 
     const { password, ...rest } = createOwnerDto;
     const hashedPassword = await bcrypt.hash(password, 10);
-    
+
     const newOwner = this.ownerRepository.create({
       ...rest,
       password: hashedPassword,
     });
-    
+
     return this.ownerRepository.save(newOwner);
   }
 
@@ -43,7 +47,10 @@ export class OwnerService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const passwordValid = await bcrypt.compare(loginOwnerDto.password, owner.password);
+    const passwordValid = await bcrypt.compare(
+      loginOwnerDto.password,
+      owner.password,
+    );
     if (!passwordValid) {
       throw new UnauthorizedException('Invalid email or password');
     }

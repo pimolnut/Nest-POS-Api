@@ -22,7 +22,7 @@ describe('OwnerService', () => {
       providers: [
         OwnerService,
         {
-          provide: getRepositoryToken(Owner),  // Mock repository
+          provide: getRepositoryToken(Owner), // Mock repository
           useValue: mockOwnerRepository,
         },
       ],
@@ -35,8 +35,6 @@ describe('OwnerService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-
-  
 
   describe('findByEmail', () => {
     it('should return an owner by email', async () => {
@@ -78,7 +76,7 @@ describe('OwnerService', () => {
 
       // Mock findByEmail
       jest.spyOn(service, 'findByEmail').mockResolvedValue(owner);
-      jest.spyOn(bcrypt, 'compare').mockResolvedValue(true);  // Mock password comparison
+      jest.spyOn(bcrypt, 'compare').mockResolvedValue(true); // Mock password comparison
 
       const result = await service.login({
         email: 'john.doe@example.com',
@@ -87,7 +85,10 @@ describe('OwnerService', () => {
 
       expect(result).toEqual(owner);
       expect(service.findByEmail).toHaveBeenCalledWith('john.doe@example.com');
-      expect(bcrypt.compare).toHaveBeenCalledWith('password123', owner.password);
+      expect(bcrypt.compare).toHaveBeenCalledWith(
+        'password123',
+        owner.password,
+      );
     });
 
     it('should throw an error if password is invalid', async () => {
@@ -101,18 +102,24 @@ describe('OwnerService', () => {
 
       // Mock findByEmail
       jest.spyOn(service, 'findByEmail').mockResolvedValue(owner);
-      jest.spyOn(bcrypt, 'compare').mockResolvedValue(false);  // Mock password comparison failed
+      jest.spyOn(bcrypt, 'compare').mockResolvedValue(false); // Mock password comparison failed
 
       await expect(
-        service.login({ email: 'john.doe@example.com', password: 'wrongpassword' }),
+        service.login({
+          email: 'john.doe@example.com',
+          password: 'wrongpassword',
+        }),
       ).rejects.toThrow('Invalid email or password');
     });
 
     it('should throw an error if email is not found', async () => {
-      jest.spyOn(service, 'findByEmail').mockResolvedValue(undefined);  // Mock email not found
+      jest.spyOn(service, 'findByEmail').mockResolvedValue(undefined); // Mock email not found
 
       await expect(
-        service.login({ email: 'john.doe@example.com', password: 'password123' }),
+        service.login({
+          email: 'john.doe@example.com',
+          password: 'password123',
+        }),
       ).rejects.toThrow('Invalid email or password');
     });
   });
