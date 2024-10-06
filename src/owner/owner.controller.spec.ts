@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OwnerController } from './owner.controller';
 import { OwnerService } from './owner.service';
+import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
+import { BadRequestException } from '@nestjs/common';
 
 describe('OwnerController', () => {
   let controller: OwnerController;
@@ -19,7 +21,7 @@ describe('OwnerController', () => {
       providers: [
         {
           provide: OwnerService,
-          useValue: mockOwnerService,  // ใช้ mock service แทนตัวจริง
+          useValue: {mockOwnerService, ForgotPasswordDto:jest.fn()},  // ใช้ mock service แทนตัวจริง
         },
       ],
     }).compile();
@@ -60,5 +62,21 @@ describe('OwnerController', () => {
     mockOwnerService.findByEmail.mockResolvedValue(dto);  // mock ให้ findByEmail คืนค่าเป็น DTO (แสดงว่ามี user นี้แล้ว)
     
     await expect(controller.register(dto)).rejects.toThrowError('Email already exists');  // ตรวจสอบว่ามีการ throw error
+  });
+  
+  it('ควรเรียก forgotPassword ของ service เมื่อส่ง DTO ที่ถูกต้อง', async () => {
+    const forgotPasswordDto: ForgotPasswordDto = { usernameOrEmail: 'test@example.com' };
+
+    await controller.forgotPassword(forgotPasswordDto);
+
+    expect(service.forgotPassword).toHaveBeenCalledWith(forgotPasswordDto);
+  });
+
+  it('ควรทดสอบกรณีที่ไม่มี email ในระบบ', async () => {
+    const forgotPasswordDto: ForgotPasswordDto = { usernameOrEmail: 'nonexistent@example.com' };
+    
+    jest.spyOn(service, 'forgotPassword').mockRejectedValue(new BadRequestException('ไม่พบผู้ใช้นี้ในระบบ'));
+
+    await expect(controller.forgotPassword(forgotPasswordDto)).rejects.toThrow(BadRequestException);
   });
 });

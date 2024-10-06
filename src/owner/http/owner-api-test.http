@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "owner_name": "FlukeloveMemee",
   "contact_info": "+6696849768",
-  "email": "pos@gmail.com",
+  "email": "eoeo@pos.com",
   "password": "password123"
 }
 
@@ -14,8 +14,30 @@ POST http://localhost:3000/owners/login
 Content-Type: application/json
 
 {
-  "email": "pos@gmail.com",
-  "password": "password123"
+  "email": "eoeo@pos.com",
+  "password": "sssdaaadad"
 }
+
+POST http://localhost:3000/owners/forgot-password
+Content-Type: application/json
+{
+  "usernameOrEmail": "eoeo@pos.com"
+}
+
+POST http://localhost:3000/owners/verify-otp
+Content-Type: application/json
+{
+  "usernameOrEmail": "eoeo@pos.com",
+  "otp": "890121"
+}
+
+POST http://localhost:3000/owners/reset-password
+Content-Type: application/json
+{
+  "usernameOrEmail": "eoeo@pos.com",
+  "newPassword": "sssdaaadad"
+}
+
+
 
 
