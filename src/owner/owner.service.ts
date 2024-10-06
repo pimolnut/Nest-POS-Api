@@ -15,14 +15,13 @@ import {
   ResetPasswordDto,
   VerifyOtpDto,
 } from './dto/forgot-owner/forgot-owner.dto';
-import { MailService } from './mail.service';
 
 @Injectable()
 export class OwnerService {
   constructor(
     @InjectRepository(Owner)
     private readonly ownerRepository: Repository<Owner>,
-    private readonly mailService: MailService,
+
   ) {}
 
   // ตรวจสอบอีเมลซ้ำก่อนสร้าง Owner
@@ -87,7 +86,12 @@ export class OwnerService {
 
     await this.ownerRepository.save(owner);
 
-    await this.mailService.sendOtpEmail(owner.email, otp);
+    await this.sendOtpEmail(owner.email, otp);
+  }
+
+  async sendOtpEmail(email: string, otp: string) {
+
+    console.log(`ส่ง OTP ${otp} ไปยังอีเมล ${email}`);
   }
 
   async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<void> {

@@ -4,13 +4,11 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Owner } from './entities/owner/owner.entity';
 import * as bcrypt from 'bcrypt';
-import { MailService } from './mail.service';
 import { BadRequestException } from '@nestjs/common';
 
 describe('OwnerService', () => {
   let service: OwnerService;
   let repository: Repository<Owner>;
-  let mailService: MailService;
 
   // Mock repository
   const mockOwnerRepository = {
@@ -40,16 +38,11 @@ describe('OwnerService', () => {
           provide: getRepositoryToken(Owner), // Mock repository
           useValue: mockOwnerRepository,
         },
-        {
-          provide: MailService,
-          useValue: mockMailService,
-        },
       ],
     }).compile();
 
     service = module.get<OwnerService>(OwnerService);
     repository = module.get<Repository<Owner>>(getRepositoryToken(Owner));
-    mailService = module.get<MailService>(MailService);
   });
 
   it('should be defined', () => {
