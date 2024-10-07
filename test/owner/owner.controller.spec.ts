@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OwnerController } from './owner.controller';
-import { OwnerService } from './owner.service';
+import { OwnerController } from '../../src/owner/owner.controller';
+import { OwnerService } from '../../src/owner/owner.service';
 
 describe('OwnerController', () => {
   let controller: OwnerController;
@@ -32,7 +32,7 @@ describe('OwnerController', () => {
     expect(controller).toBeDefined();
   });
 
-  // ทดสอบการเรียก create
+  // * Test Register Owner
   it('should call create method on the service', async () => {
     const dto = {
       owner_name: 'John Doe',

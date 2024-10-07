@@ -25,6 +25,8 @@
         "typeorm"
     ],
     "cSpell.ignoreWords": [
+        "Pointofsale",
+        "wrongpassword",
         "คืนเงินเสร็จสิ",
         "ยังไม่คืนเงิน"
     ]
