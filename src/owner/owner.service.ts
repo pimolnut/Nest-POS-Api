@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Owner } from './entities/owner/owner.entity'; // ตรวจสอบว่าไฟล์ entity มีเส้นทางถูกต้อง
+import { Owner } from './entities/owner/owner.entity';
 import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
@@ -17,7 +17,7 @@ export class OwnerService {
     private readonly ownerRepository: Repository<Owner>,
   ) {}
 
-  // ตรวจสอบอีเมลซ้ำก่อนสร้าง Owner
+  // Check for duplicate email before creating Owner
   async create(createOwnerDto: CreateOwnerDto): Promise<Owner> {
     const existingOwner = await this.findByEmail(createOwnerDto.email);
     if (existingOwner) {
@@ -33,6 +33,34 @@ export class OwnerService {
     });
 
     return this.ownerRepository.save(newOwner);
+  }
+  // สร้าง Owner หลายๆคนพร้อมกัน
+  async createMany(owners: CreateOwnerDto[]): Promise<Owner[]> {
+    const createdOwners: Owner[] = [];
+
+    for (const createOwnerDto of owners) {
+      const existingOwner = await this.findByEmail(createOwnerDto.email);
+      if (existingOwner) {
+        console.warn(`
+          Owner with email ${createOwnerDto.email} already exists. Skipping.
+          Continuing to the next record.
+      `);
+        continue; // ข้ามถ้าเจออีเมลที่มีอยู่แล้ว
+      }
+
+      const { password, ...rest } = createOwnerDto;
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newOwner = this.ownerRepository.create({
+        ...rest,
+        password: hashedPassword,
+      });
+
+      const savedOwner = await this.ownerRepository.save(newOwner);
+      createdOwners.push(savedOwner);
+    }
+
+    return createdOwners;
   }
 
   // ค้นหา Owner ด้วยอีเมล

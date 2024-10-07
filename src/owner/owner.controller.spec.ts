@@ -8,9 +8,9 @@ describe('OwnerController', () => {
 
   // Mock OwnerService
   const mockOwnerService = {
-    create: jest.fn(), // mock ฟังก์ชัน create
-    login: jest.fn(), // mock ฟังก์ชัน login
-    findByEmail: jest.fn(), // mock ฟังก์ชัน findByEmail
+    create: jest.fn(), // mock function create
+    login: jest.fn(), // mock function login
+    findByEmail: jest.fn(), // mock function findByEmail
   };
 
   beforeEach(async () => {
@@ -19,7 +19,7 @@ describe('OwnerController', () => {
       providers: [
         {
           provide: OwnerService,
-          useValue: mockOwnerService, // ใช้ mock service แทนตัวจริง
+          useValue: mockOwnerService, // use mock service
         },
       ],
     }).compile();
