@@ -4,7 +4,7 @@
 This document outlines the tasks planned for each day.
 
 ### Sprint 7-8 Aug: [Date: 19-30 Aug 2024]
-- [19-30 Aug] Task 1: start project and adjust structure
+- [19-30 Aug] Task 1: start project and adjust structure ✅
 - [19-30 Aug] Task 2: <owner> Api login ✅
 - [19-30 Aug] Task 3: <owner> Api forgot password
 - [19-30 Aug] Task 4: from infomation for register of POS
