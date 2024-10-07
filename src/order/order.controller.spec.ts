@@ -3,14 +3,13 @@ import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order/update-order.dto';
-import { CancelStatus } from './dto/create-order/create-order.dto'; 
+import { CancelStatus } from './dto/create-order/create-order.dto';
 import { Response } from 'express';
 
 describe('OrderController', () => {
   let controller: OrderController;
   let service: OrderService;
   let res: Partial<Response>;
-
 
   const mockOrder = {
     order_id: 1,
@@ -19,10 +18,9 @@ describe('OrderController', () => {
     total_price: 100,
     queue_number: 5,
     status: 'processing',
-    cancel_status: CancelStatus.RefundPending, 
+    cancel_status: CancelStatus.RefundPending,
   };
 
-  
   const mockOrderService = {
     create: jest.fn().mockResolvedValue(mockOrder),
     findAll: jest.fn().mockResolvedValue([mockOrder]),
@@ -37,7 +35,7 @@ describe('OrderController', () => {
       providers: [
         {
           provide: OrderService,
-          useValue: mockOrderService, 
+          useValue: mockOrderService,
         },
       ],
     }).compile();
@@ -63,7 +61,7 @@ describe('OrderController', () => {
       total_price: 100,
       queue_number: 5,
       status: 'processing',
-      cancel_status: CancelStatus.RefundPending, 
+      cancel_status: CancelStatus.RefundPending,
     };
     const result = await controller.create(createOrderDto);
     expect(result).toEqual(mockOrder);

@@ -3,9 +3,9 @@ POST http://localhost:3000/owners/register
 Content-Type: application/json
 
 {
-  "owner_name": "FlukeloveMemee",
-  "contact_info": "+6696849768",
-  "email": "pos@gmail.com",
+  "owner_name": "John Doe",
+  "contact_info": "123456789",
+  "email": "john.doe@example.com",
   "password": "password123"
 }
 
@@ -18,4 +18,19 @@ Content-Type: application/json
   "password": "password123"
 }
 
+### Upload CSV with Owner Data
+POST http://localhost:3000/owners/upload-csv
+Content-Type: multipart/form-data
+
+file=@./uploads/owners.csv
+
+
+
+### Reset Password
+PATCH http://localhost:3000/owners/reset-password/1
+Content-Type: application/json
+
+{
+  "newPassword": "12345password"
+}
 
