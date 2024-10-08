@@ -6,8 +6,8 @@ export async function sendTemporaryPasswordEmail(
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'pos.project67@gmail.com',
-      pass: 'igyk qdtl ymug ltkc',
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
   const mailOptions = {
