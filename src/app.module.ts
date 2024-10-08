@@ -5,6 +5,7 @@ import { OrderModule } from './order/order.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { OwnerModule } from './owner/owner.module';
+import { MenuModule } from './menu/menu.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { OwnerModule } from './owner/owner.module';
     OrderModule,
     AuthModule,
     OwnerModule,
+    MenuModule,
   ],
 })
 export class AppModule {}
