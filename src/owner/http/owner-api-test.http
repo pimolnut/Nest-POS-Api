@@ -3,9 +3,9 @@ POST http://localhost:3000/owners/register
 Content-Type: application/json
 
 {
-  "owner_name": "FlukeloveMemee",
-  "contact_info": "+6696849768",
-  "email": "eoeo@pos.com",
+  "owner_name": "John Doe",
+  "contact_info": "123456789",
+  "email": "john.doe@example.com",
   "password": "password123"
 }
 
@@ -23,6 +23,9 @@ Content-Type: application/json
 {
   "usernameOrEmail": "eoeo@pos.com"
 }
+### Upload CSV with Owner Data
+POST http://localhost:3000/owners/upload-csv
+Content-Type: multipart/form-data
 
 POST http://localhost:3000/owners/verify-otp
 Content-Type: application/json
@@ -30,6 +33,7 @@ Content-Type: application/json
   "usernameOrEmail": "eoeo@pos.com",
   "otp": "890121"
 }
+file=@./uploads/owners.csv
 
 POST http://localhost:3000/owners/reset-password
 Content-Type: application/json
@@ -40,4 +44,15 @@ Content-Type: application/json
 
 
 
+
+
+
+
+### Reset Password
+PATCH http://localhost:3000/owners/reset-password/1
+Content-Type: application/json
+
+{
+  "newPassword": "12345password"
+}
 

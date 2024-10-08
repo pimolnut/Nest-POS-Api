@@ -1,14 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OwnerService } from './owner.service';
+import { OwnerService } from '../../src/owner/owner.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Owner } from './entities/owner/owner.entity';
+import { Owner } from '../../src/owner/entities/owner/owner.entity';
 import * as bcrypt from 'bcrypt';
 import { BadRequestException } from '@nestjs/common';
 
 describe('OwnerService', () => {
   let service: OwnerService;
-  let repository: Repository<Owner>;
 
   // Mock repository
   const mockOwnerRepository = {
@@ -30,7 +28,7 @@ describe('OwnerService', () => {
   };
 
   beforeEach(async () => {
-    jest.clearAllMocks(); // รีเซ็ต mock ฟังก์ชันทุกครั้งก่อนเริ่มการทดสอบ
+    jest.clearAllMocks(); // Clear all mock calls
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OwnerService,
@@ -40,9 +38,7 @@ describe('OwnerService', () => {
         },
       ],
     }).compile();
-
     service = module.get<OwnerService>(OwnerService);
-    repository = module.get<Repository<Owner>>(getRepositoryToken(Owner));
   });
 
   it('should be defined', () => {
