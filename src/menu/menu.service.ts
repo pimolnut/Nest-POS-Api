@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMenuDto } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Menu } from './entities/menu.entity';
+import { CreateMenuDto } from './dto/create-menu/create-menu.dto';
+import { UpdateMenuDto } from './dto/update-menu.dto/update-menu.dto';
 
 @Injectable()
 export class MenuService {
-  create(createMenuDto: CreateMenuDto) {
-    return 'This action adds a new menu';
+  constructor(
+    @InjectRepository(Menu)
+    private readonly menuRepository: Repository<Menu>,
+  ) {}
+  // * create a new menu
+  async create(createMenuDto: CreateMenuDto): Promise<Menu> {
+    const newMenu = this.menuRepository.create(createMenuDto);
+    return this.menuRepository.save(newMenu);
   }
-
-  findAll() {
-    return `This action returns all menu`;
+  // * get all menus
+  async findAll(): Promise<Menu[]> {
+    return this.menuRepository.find();
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} menu`;
+  // * get a single menu
+  async findOne(id: number): Promise<Menu> {
+    const menu = await this.menuRepository.findOne({ where: { menu_id: id } });
+    if (!menu) {
+      throw new NotFoundException(`Menu with ID ${id} not found`);
+    }
+    return menu;
   }
-
-  update(id: number, updateMenuDto: UpdateMenuDto) {
-    return `This action updates a #${id} menu`;
+  // * update a menu
+  async update(id: number, updateMenuDto: UpdateMenuDto): Promise<Menu> {
+    const menu = await this.findOne(id);
+    Object.assign(menu, updateMenuDto);
+    return this.menuRepository.save(menu);
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} menu`;
+  // * delete a menu
+  async remove(id: number): Promise<void> {
+    const menu = await this.findOne(id);
+    await this.menuRepository.remove(menu);
   }
 }

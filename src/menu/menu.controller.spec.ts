@@ -1,20 +1,42 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { MenuController } from './menu.controller';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MenuService } from './menu.service';
+import { CreateMenuDto } from './dto/create-menu/create-menu.dto';
+import { UpdateMenuDto } from './dto/update-menu.dto/update-menu.dto';
 
-describe('MenuController', () => {
-  let controller: MenuController;
+@Controller('menus')
+export class MenuController {
+  constructor(private readonly menuService: MenuService) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [MenuController],
-      providers: [MenuService],
-    }).compile();
+  @Post()
+  async create(@Body() createMenuDto: CreateMenuDto) {
+    return this.menuService.create(createMenuDto);
+  }
 
-    controller = module.get<MenuController>(MenuController);
-  });
+  @Get()
+  async findAll() {
+    return this.menuService.findAll();
+  }
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.menuService.findOne(+id);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
+    return this.menuService.update(+id, updateMenuDto);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.menuService.remove(+id);
+  }
+}
