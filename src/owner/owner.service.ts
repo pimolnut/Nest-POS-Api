@@ -1,27 +1,24 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
-import { Owner } from './entities/owner/owner.entity';
 import { Repository } from 'typeorm';
-import { Owner } from './entities/owner/owner.entity'; // ตรวจสอบว่าไฟล์ entity มีเส้นทางถูกต้อง
+import { Owner } from './entities/owner/owner.entity';
 import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import * as bcrypt from 'bcrypt';
 import { sendTemporaryPasswordEmail } from '../utils/send-email.util';
 import { UpdatePasswordDto } from './dto/update-password/update-password.dto';
 import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
-import * as crypto from 'crypto';
-import {
-  ForgotPasswordDto,
-  ResetPasswordDto,
-  VerifyOtpDto,
-} from './dto/forgot-owner/forgot-owner.dto';
+import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
+import { VerifyOtpDto } from './dto/verify-otp-owner/verify-otp-owner.dto';
 
 @Injectable()
 export class OwnerService {
   constructor(
     @InjectRepository(Owner)
     private readonly ownerRepository: Repository<Owner>,
-
   ) {}
 
   // * Check for duplicate email before creating Owner
@@ -31,21 +28,18 @@ export class OwnerService {
     if (existingOwner) {
       throw new BadRequestException('Email already exists');
     }
+
     // * Generate a temporary password
     const tempPassword = Math.random().toString(36).slice(-8); // ? Generate a random temporary password
     // * Hash the password before saving it to the database.
     const hashedPassword = await bcrypt.hash(tempPassword, 10);
     // * Create a new owner
-
-    const { password, ...rest } = createOwnerDto;
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const newOwner = this.ownerRepository.create({
       ...createOwnerDto,
       password: hashedPassword, // ? Save the hashed password
     });
 
-    return this.ownerRepository.save(newOwner);
+    // return this.ownerRepository.save(newOwner);
     // * Save the new owner to the database
     const savedOwner = await this.ownerRepository.save(newOwner);
     // * Send the temporary password to the owner's email
@@ -127,13 +121,13 @@ export class OwnerService {
     });
 
     if (!owner) {
-      throw new BadRequestException('ไม่พบผู้ใช้นี้ในระบบ');
+      throw new BadRequestException('not found');
     }
 
-    // สร้าง OTP (รหัส 6 หลัก)
+    // create OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // บันทึก OTP และเวลาหมดอายุ (5 นาที)
+    // save OTP and expiry time 5 minutes
     owner.otp = otp;
     owner.otpExpiry = new Date();
     owner.otpExpiry.setMinutes(owner.otpExpiry.getMinutes() + 15);
@@ -144,8 +138,7 @@ export class OwnerService {
   }
 
   async sendOtpEmail(email: string, otp: string) {
-
-    console.log(`ส่ง OTP ${otp} ไปยังอีเมล ${email}`);
+    console.log(`ส่ง OTP ${otp} to this email ${email}`);
   }
 
   async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<void> {
@@ -156,30 +149,15 @@ export class OwnerService {
     });
 
     if (!owner || owner.otp !== otp || owner.otpExpiry < new Date()) {
-      throw new BadRequestException('OTP ไม่ถูกต้องหรือหมดอายุ');
+      throw new BadRequestException('OTP expired or invalid');
     }
 
-    owner.otp = null; // ลบ OTP หลังการยืนยันเสร็จสิ้น
+    owner.otp = null; // ลบ OTP after verify
     owner.otpExpiry = null;
 
     await this.ownerRepository.save(owner);
   }
 
-  async resetPassword(resetPasswordDto: ResetPasswordDto): Promise<void> {
-    const { usernameOrEmail, newPassword } = resetPasswordDto;
-
-    const owner = await this.ownerRepository.findOne({
-      where: { email: usernameOrEmail },
-    });
-
-    if (!owner) {
-      throw new BadRequestException('ไม่พบผู้ใช้นี้ในระบบ');
-    }
-
-    owner.password = await bcrypt.hash(newPassword, 10);
-
-    await this.ownerRepository.save(owner);
-  }
   async updatePassword(
     ownerId: number,
     updatePasswordDto: UpdatePasswordDto,

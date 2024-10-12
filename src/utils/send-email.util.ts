@@ -12,9 +12,9 @@ export async function sendTemporaryPasswordEmail(
   });
   const mailOptions = {
     from: 'pos.project67@gmail.com',
-    to: email,
+    to: 'pos.project67@gmail.com',
     subject: 'Your Temporary Password',
-    text: `Your temporary password is: ${tempPassword}. Please use this password to login and reset your password.`,
+    text: `Your email ${email}temporary password is: ${tempPassword}. Please use this password to login and reset your password.`,
   };
   await transporter.sendMail(mailOptions);
 }

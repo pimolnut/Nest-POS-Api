@@ -16,7 +16,6 @@ export class Owner {
 
   @Column({ type: 'varchar', length: 255 })
   password: string;
-  
   // ฟิลด์สำหรับเก็บ OTP
   @Column({ nullable: true })
   otp: string;

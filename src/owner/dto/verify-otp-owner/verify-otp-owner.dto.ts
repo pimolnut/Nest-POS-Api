@@ -1,6 +1,8 @@
 import { IsString } from 'class-validator';
 
-export class ForgotPasswordDto {
+export class VerifyOtpDto {
   @IsString()
   usernameOrEmail: string;
+  @IsString()
+  otp: string;
 }
