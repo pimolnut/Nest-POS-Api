@@ -3,6 +3,7 @@ import { OwnerService } from '../../src/owner/owner.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Owner } from '../../src/owner/entities/owner/owner.entity';
 import * as bcrypt from 'bcrypt';
+import { BadRequestException } from '@nestjs/common';
 
 describe('OwnerService', () => {
   let service: OwnerService;
@@ -12,6 +13,18 @@ describe('OwnerService', () => {
     create: jest.fn(),
     save: jest.fn(),
     findOne: jest.fn(),
+  };
+
+  const mockOwner = {
+    email: 'test@example.com',
+    otp: null,
+    otpExpiry: null,
+    password: 'hashedpassword',
+    save: jest.fn(),
+  };
+
+  const mockMailService = {
+    sendOtpEmail: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -68,6 +81,8 @@ describe('OwnerService', () => {
         contact_info: '123456789',
         email: 'john.doe@example.com',
         password: await bcrypt.hash('password123', 10),
+        otp: '123456',
+        otpExpiry: new Date(Date.now() + 300000),
       };
 
       // Mock findByEmail
@@ -94,6 +109,8 @@ describe('OwnerService', () => {
         contact_info: '123456789',
         email: 'john.doe@example.com',
         password: await bcrypt.hash('password123', 10),
+        otp: '123456', // เพิ่ม otp ให้ตรงตาม type
+        otpExpiry: new Date(Date.now() + 300000),
       };
 
       // Mock findByEmail
@@ -117,6 +134,90 @@ describe('OwnerService', () => {
           password: 'password123',
         }),
       ).rejects.toThrow('Invalid email or password');
+    });
+  });
+
+  describe('forgotPassword', () => {
+    it('should send OTP to the user email', async () => {
+      mockOwnerRepository.findOne.mockResolvedValueOnce(mockOwner);
+      mockMailService.sendOtpEmail.mockResolvedValueOnce(undefined);
+
+      await service.forgotPassword({ usernameOrEmail: 'test@example.com' });
+
+      expect(mockOwner.otp).toBeDefined();
+      expect(mockOwner.otpExpiry).toBeDefined();
+      expect(mockMailService.sendOtpEmail).toHaveBeenCalledWith(
+        'test@example.com',
+        mockOwner.otp,
+      );
+      expect(mockOwnerRepository.save).toHaveBeenCalledWith(mockOwner);
+    });
+
+    it('should throw BadRequestException if user is not found', async () => {
+      mockOwnerRepository.findOne.mockResolvedValueOnce(null);
+
+      await expect(
+        service.forgotPassword({ usernameOrEmail: 'notfound@example.com' }),
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
+  describe('verifyOtp', () => {
+    it('should verify OTP and allow user to reset password', async () => {
+      mockOwnerRepository.findOne.mockResolvedValueOnce({
+        ...mockOwner,
+        otp: '123456',
+        otpExpiry: new Date(Date.now() + 300000), // 5 นาทีในอนาคต
+      });
+
+      await service.verifyOtp({
+        usernameOrEmail: 'test@example.com',
+        otp: '123456',
+      });
+
+      expect(mockOwner.otp).toBeNull();
+      expect(mockOwner.otpExpiry).toBeNull();
+      expect(mockOwnerRepository.save).toHaveBeenCalledWith(mockOwner);
+    });
+    it('should throw BadRequestException if OTP is incorrect or expired', async () => {
+      mockOwnerRepository.findOne.mockResolvedValueOnce({
+        ...mockOwner,
+        otp: '123456',
+        otpExpiry: new Date(Date.now() - 300000), // หมดอายุแล้ว
+      });
+
+      await expect(
+        service.verifyOtp({
+          usernameOrEmail: 'test@example.com',
+          otp: '123456',
+        }),
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  describe('resetPassword', () => {
+    it('should reset password for the user', async () => {
+      const newPassword = 'newpassword123';
+      mockOwnerRepository.findOne.mockResolvedValueOnce(mockOwner);
+      jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce('hashedNewPassword');
+
+      await service.resetPassword({
+        usernameOrEmail: 'test@example.com',
+        newPassword,
+      });
+
+      expect(mockOwner.password).toEqual('hashedNewPassword');
+      expect(mockOwnerRepository.save).toHaveBeenCalledWith(mockOwner);
+    });
+
+    it('should throw BadRequestException if user is not found', async () => {
+      mockOwnerRepository.findOne.mockResolvedValueOnce(null);
+
+      await expect(
+        service.resetPassword({
+          usernameOrEmail: 'notfound@example.com',
+          newPassword: 'password123',
+        }),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });

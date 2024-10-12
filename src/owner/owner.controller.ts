@@ -18,12 +18,14 @@ import { Readable } from 'stream';
 import { sendTemporaryPasswordEmail } from '../utils/send-email.util';
 import { UpdatePasswordDto } from './dto/update-password/update-password.dto';
 import * as csvParser from 'csv-parser';
+import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
+import { VerifyOtpDto } from './dto/verify-otp-owner/verify-otp-owner.dto';
 
 @Controller('owners')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
   @Patch('reset-password/:id')
-  async resetPassword(
+  async updatePassword(
     @Param('id') ownerId: string,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
@@ -102,5 +104,17 @@ export class OwnerController {
           );
         });
     });
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    await this.ownerService.forgotPassword(forgotPasswordDto);
+    return { message: 'OTP ถูกส่งไปยังอีเมลของคุณแล้ว' };
+  }
+
+  @Post('verify-otp')
+  async verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
+    await this.ownerService.verifyOtp(verifyOtpDto);
+    return { message: 'OTP ถูกต้อง สามารถตั้งรหัสผ่านใหม่ได้' };
   }
 }
