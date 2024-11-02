@@ -14,8 +14,8 @@ POST http://localhost:3000/owners/login
 Content-Type: application/json
 
 {
-  "email": " new1@eie.com",
-  "password": " rbli0uuj"
+  "email": "new1@eie.com",
+  "password": "12345password"
 }
 
 
@@ -34,20 +34,20 @@ POST http://localhost:3000/owners/verify-otp
 Content-Type: application/json
 {
   "usernameOrEmail": "new1@eie.com",
-  "otp": "161264"
+  "otp": "487873"
 }
 
 
 POST http://localhost:3000/owners/reset-password
 Content-Type: application/json
 {
-  "usernameOrEmail": "eoeo@pos.com",
-  "newPassword": "sssdaaadad"
+  "usernameOrEmail": "new1@eie.com",
+  "newPassword": "12123121dd21"
 }
 
 
 ### Reset Password
-PATCH http://localhost:3000/owners/reset-password/1
+PATCH http://localhost:3000/owners/reset-password/25
 Content-Type: application/json
 
 {

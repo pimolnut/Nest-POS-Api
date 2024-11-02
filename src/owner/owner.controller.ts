@@ -56,6 +56,10 @@ export class OwnerController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadCsv(@UploadedFile() file: Express.Multer.File) {
     // * Create an array to store the owner data from the CSV file.
+    if (!file) {
+      throw new HttpException('No file provided', HttpStatus.BAD_REQUEST);
+    }
+
     const owners: CreateOwnerDto[] = [];
 
     // * Convert the uploaded file (buffer) to a readable stream and use csv-parser to read the CSV data.
