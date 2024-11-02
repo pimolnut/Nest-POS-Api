@@ -3,10 +3,10 @@ POST http://localhost:3000/orders
 Content-Type: application/json
 
 {
-  "customer_id": 123,
+  "customer_id": 1,
   "order_date": "2023-09-16T08:00:00Z",
-  "total_price": 500,
-  "queue_number": 1,
+  "total_price": 123,
+  "queue_number": 2,
   "status": "processing",
   "cancel_status": "ยังไม่คืนเงิน"
 }
@@ -15,10 +15,10 @@ Content-Type: application/json
 GET http://localhost:3000/orders
 
 ### Get Order by ID
-GET http://localhost:3000/orders/1
+GET http://localhost:3000/orders/11
 
 ### Update Order
-PATCH http://localhost:3000/orders/1
+PATCH http://localhost:3000/orders/11
 Content-Type: application/json
 
 {
@@ -26,4 +26,4 @@ Content-Type: application/json
 }
 
 ### Delete Order
-DELETE http://localhost:3000/orders/1
+DELETE http://localhost:3000/orders/11
