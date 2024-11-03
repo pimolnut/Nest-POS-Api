@@ -7,7 +7,7 @@ export async function sendTemporaryPasswordEmail(
     service: 'Gmail',
     auth: {
       user: 'pos.project67@gmail.com',
-      pass: 'igyk qdtl ymug ltkc',
+      pass: 'sdbr fpcl poen cino',
     },
   });
   const mailOptions = {
