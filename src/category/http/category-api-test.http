@@ -1,0 +1,16 @@
+### Create a new Category
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "category_name": "Tea & Coffee"
+}
+
+### Get all Categories
+GET http://localhost:3000/categories
+
+### Get a specific Category by ID
+GET http://localhost:3000/categories/1
+
+### Delete a Category by ID
+DELETE http://localhost:3000/categories/1

@@ -1,0 +1,28 @@
+### Create a new Branch
+POST http://localhost:3000/branches
+Content-Type: application/json
+
+{
+  "branch_name": "Far Branch",
+  "branch_address": "123 Main Street",
+  "branch_phone_number": "123456789",
+  "owner_id": 1
+}
+
+### Get all Branches
+GET http://localhost:3000/branches
+
+### Get a specific Branch by ID
+GET http://localhost:3000/branches/5
+
+### Update a Branch by ID
+PATCH http://localhost:3000/branches/5
+Content-Type: application/json
+
+{
+  "branch_name": "Updated Branch Name",
+  "branch_address": "456 Secondary Street"
+}
+
+### Delete a Branch by ID
+DELETE http://localhost:3000/branches/4

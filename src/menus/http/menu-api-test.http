@@ -1,0 +1,33 @@
+### Create a new Menu
+POST http://localhost:3000/menus
+Content-Type: application/json
+
+{
+  "store_id": 1,
+  "category_id": 1,
+  "menu_name": "Spaghetti",
+  "description": "Delicious spaghetti with tomato sauce",
+  "price": 44444,
+  "owner_id": 1,
+  "branch_id": 5,
+  "image_url": "http://example.com/spaghetti.jpg"
+}
+
+### Get all Menus
+GET http://localhost:3000/menus
+
+### Get a specific Menu by ID
+GET http://localhost:3000/menus/6
+
+### Update a Menu by ID
+PATCH http://localhost:3000/menus/6
+Content-Type: application/json
+
+{
+  "menu_name": "Spaghetti Bolognese",
+  "price": 14.99,
+  "description": "Spaghetti with meat sauce"
+}
+
+### Delete a Menu by ID
+DELETE http://localhost:3000/menus/1
