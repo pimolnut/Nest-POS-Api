@@ -14,29 +14,29 @@ import { UpdateMenuDto } from './dto/update-menu.dto/update-menu.dto';
 @Controller('menus')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
-
+  // * create a new menu
   @Post()
-  async create(@Body() createMenuDto: CreateMenuDto) {
+  create(@Body() createMenuDto: CreateMenuDto) {
     return this.menuService.create(createMenuDto);
   }
-
+  // * get all menus
   @Get()
-  async findAll() {
+  findAll() {
     return this.menuService.findAll();
   }
-
+  // * get a single menu
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) {
     return this.menuService.findOne(+id);
   }
-
+  // * update a menu
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
+  update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
     return this.menuService.update(+id, updateMenuDto);
   }
-
+  // * delete a menu
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  remove(@Param('id') id: string) {
     return this.menuService.remove(+id);
   }
 }

@@ -7,9 +7,9 @@ Content-Type: application/json
   "category_id": 1,
   "menu_name": "Spaghetti",
   "description": "Delicious spaghetti with tomato sauce",
-  "price": 12.99,
+  "price": 44444,
   "owner_id": 1,
-  "branch_id": 1,
+  "branch_id": 5,
   "image_url": "http://example.com/spaghetti.jpg"
 }
 
@@ -17,10 +17,10 @@ Content-Type: application/json
 GET http://localhost:3000/menus
 
 ### Get a specific Menu by ID
-GET http://localhost:3000/menus/1
+GET http://localhost:3000/menus/6
 
 ### Update a Menu by ID
-PATCH http://localhost:3000/menus/1
+PATCH http://localhost:3000/menus/6
 Content-Type: application/json
 
 {
@@ -31,4 +31,3 @@ Content-Type: application/json
 
 ### Delete a Menu by ID
 DELETE http://localhost:3000/menus/1
-

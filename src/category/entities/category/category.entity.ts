@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Menu } from '../../../menu/entities/menu.entity';
+import { Menus } from '../../../menus/entities/menus.entity';
 
 @Entity()
 export class Category {
@@ -9,6 +9,6 @@ export class Category {
   @Column()
   category_name: string;
 
-  @OneToMany(() => Menu, (menu) => menu.category)
-  menus: Menu[];
+  @OneToMany(() => Menus, (menus) => menus.category)
+  menus: Menus[];
 }

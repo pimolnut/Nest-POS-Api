@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Owner } from '../../../owner/entities/owner/owner.entity';
-import { Menu } from '../../../menu/entities/menu.entity';
+import { Menus } from '../../../menus/entities/menus.entity';
 
 @Entity()
 export class Branch {
@@ -27,6 +27,6 @@ export class Branch {
   @JoinColumn({ name: 'owner_id' })
   owner: Owner;
 
-  @OneToMany(() => Menu, (menu) => menu.branch)
-  menus: Menu[];
+  @OneToMany(() => Menus, (menus) => menus.branch)
+  menus: Menus[];
 }

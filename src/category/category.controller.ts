@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { CategoryService } from './category.service';
+import { CreateCategoryDto } from './dto/create-category/create-category.dto';
 
 @Controller('categories')
 export class CategoryController {
@@ -16,8 +17,8 @@ export class CategoryController {
   }
 
   @Post()
-  async create(@Body('category_name') category_name: string) {
-    return this.categoryService.create(category_name);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoryService.create(createCategoryDto);
   }
 
   @Delete(':id')

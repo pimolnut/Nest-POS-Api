@@ -6,11 +6,11 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Owner } from '../../owner/entities/owner/owner.entity';
-import { Category } from '../../category/entities/category.entity/category.entity';
-import { Branch } from '../../branch/entities/branch.entity/branch.entity';
+import { Category } from '../../category/entities/category/category.entity';
+import { Branch } from '../../branch/entities/branch/branch.entity';
 
 @Entity()
-export class Menu {
+export class Menus {
   @PrimaryGeneratedColumn()
   menu_id: number;
 

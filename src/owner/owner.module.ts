@@ -28,5 +28,7 @@ import { Owner } from './entities/owner/owner.entity';
    * * The OwnerService contains the business logic for creating, updating, and managing owners.
    */
   providers: [OwnerService],
+
+  exports: [OwnerService, TypeOrmModule],
 })
 export class OwnerModule {}
