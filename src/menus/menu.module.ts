@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MenuService } from './menu.service';
 import { MenuController } from './menu.controller';
-import { Menus } from './entities/menus.entity';
+import { Menu } from './entities/menu.entity';
 import { CategoryModule } from '../category/category.module'; 
 import { OwnerModule } from '../owner/owner.module'; 
 import { BranchModule } from '../branch/branch.module'; 
@@ -10,7 +10,7 @@ import { BranchModule } from '../branch/branch.module';
 
 @Module({
   imports: [
-  TypeOrmModule.forFeature([Menus]),
+  TypeOrmModule.forFeature([Menu]),
   CategoryModule,
   OwnerModule, 
   BranchModule, 

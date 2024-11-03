@@ -10,7 +10,7 @@ import { Category } from '../../category/entities/category/category.entity';
 import { Branch } from '../../branch/entities/branch/branch.entity';
 
 @Entity()
-export class Menus {
+export class Menu {
   @PrimaryGeneratedColumn()
   menu_id: number;
 

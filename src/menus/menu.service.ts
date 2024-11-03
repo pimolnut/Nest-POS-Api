@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Menus } from './entities/menus.entity';
+import { Menu } from './entities/menu.entity';
 import { CreateMenuDto } from './dto/create-menu/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto/update-menu.dto';
 import { Category } from '../category/entities/category/category.entity';
@@ -12,8 +12,8 @@ import { Branch } from '../branch/entities/branch/branch.entity';
 @Injectable()
 export class MenuService {
   constructor(
-    @InjectRepository(Menus)
-    private readonly menuRepository: Repository<Menus>,
+    @InjectRepository(Menu)
+    private readonly menuRepository: Repository<Menu>,
       // Inject repositories ของ entities ที่เกี่ยวข้อง
       @InjectRepository(Category)
       private readonly categoryRepository: Repository<Category>,
@@ -25,7 +25,7 @@ export class MenuService {
       private readonly branchRepository: Repository<Branch>,
   ) {}
   // * create a new menu
-  async create(createMenuDto: CreateMenuDto): Promise<Menus> {
+  async create(createMenuDto: CreateMenuDto): Promise<Menu> {
     const { category_id, owner_id, branch_id, ...menuData } = createMenuDto;
     // * Load Category
     const category = await this.categoryRepository.findOne({ where: { category_id } });
@@ -58,11 +58,11 @@ export class MenuService {
     return savedMenu;
   }
   // * get all menus
-  async findAll(): Promise<Menus[]> {
+  async findAll(): Promise<Menu[]> {
     return this.menuRepository.find();
   }
   // * get a single menu
-  async findOne(id: number): Promise<Menus> {
+  async findOne(id: number): Promise<Menu> {
     const menu = await this.menuRepository.findOne({ where: { menu_id: id } });
     if (!menu) {
       throw new NotFoundException(`Menu with ID ${id} not found`);
@@ -70,7 +70,7 @@ export class MenuService {
     return menu;
   }
   // * update a menu
-  async update(id: number, updateMenuDto: UpdateMenuDto): Promise<Menus> {
+  async update(id: number, updateMenuDto: UpdateMenuDto): Promise<Menu> {
     const menu = await this.findOne(id);
     Object.assign(menu, updateMenuDto);
     return this.menuRepository.save(menu);

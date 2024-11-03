@@ -3,7 +3,7 @@ POST http://localhost:3000/branches
 Content-Type: application/json
 
 {
-  "branch_name": "Far Branch",
+  "branch_name": "MeMee Branch",
   "branch_address": "123 Main Street",
   "branch_phone_number": "123456789",
   "owner_id": 1
