@@ -1,16 +1,18 @@
 import {
-  BadRequestException,
   Injectable,
   UnauthorizedException,
+  BadRequestException,
 } from '@nestjs/common';
-import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
-import { Owner } from './entities/owner/owner.entity';
 import { Repository } from 'typeorm';
+import { Owner } from './entities/owner/owner.entity';
+import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import * as bcrypt from 'bcrypt';
 import { sendTemporaryPasswordEmail } from '../utils/send-email.util';
 import { UpdatePasswordDto } from './dto/update-password/update-password.dto';
+import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
+import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
+import { VerifyOtpDto } from './dto/verify-otp-owner/verify-otp-owner.dto';
 
 @Injectable()
 export class OwnerService {
@@ -26,6 +28,7 @@ export class OwnerService {
     if (existingOwner) {
       throw new BadRequestException('Email already exists');
     }
+
     // * Generate a temporary password
     const tempPassword = Math.random().toString(36).slice(-8); // ? Generate a random temporary password
     // * Hash the password before saving it to the database.
@@ -35,6 +38,8 @@ export class OwnerService {
       ...createOwnerDto,
       password: hashedPassword, // ? Save the hashed password
     });
+
+    // return this.ownerRepository.save(newOwner);
     // * Save the new owner to the database
     const savedOwner = await this.ownerRepository.save(newOwner);
     // * Send the temporary password to the owner's email
@@ -96,7 +101,7 @@ export class OwnerService {
     if (!owner) {
       throw new UnauthorizedException('Invalid email or password');
     }
-    // * Validate password
+
     const passwordValid = await bcrypt.compare(
       loginOwnerDto.password,
       owner.password,
@@ -107,6 +112,52 @@ export class OwnerService {
 
     return owner;
   }
+
+  async forgotPassword(forgotPasswordDto: ForgotPasswordDto): Promise<void> {
+    const { usernameOrEmail } = forgotPasswordDto;
+
+    const owner = await this.ownerRepository.findOne({
+      where: { email: usernameOrEmail },
+    });
+
+    if (!owner) {
+      throw new BadRequestException('not found');
+    }
+
+    // create OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // save OTP and expiry time 5 minutes
+    owner.otp = otp;
+    owner.otpExpiry = new Date();
+    owner.otpExpiry.setMinutes(owner.otpExpiry.getMinutes() + 15);
+
+    await this.ownerRepository.save(owner);
+
+    await this.sendOtpEmail(owner.email, otp);
+  }
+
+  async sendOtpEmail(email: string, otp: string) {
+    console.log(`ส่ง OTP ${otp} to this email ${email}`);
+  }
+
+  async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<void> {
+    const { usernameOrEmail, otp } = verifyOtpDto;
+
+    const owner = await this.ownerRepository.findOne({
+      where: { email: usernameOrEmail },
+    });
+
+    if (!owner || owner.otp !== otp || owner.otpExpiry < new Date()) {
+      throw new BadRequestException('OTP expired or invalid');
+    }
+
+    owner.otp = null; // ลบ OTP after verify
+    owner.otpExpiry = null;
+
+    await this.ownerRepository.save(owner);
+  }
+
   async updatePassword(
     ownerId: number,
     updatePasswordDto: UpdatePasswordDto,
