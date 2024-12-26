@@ -8,27 +8,28 @@ import { Category } from '../category/entities/category/category.entity';
 import { Owner } from '../owner/entities/owner/owner.entity';
 import { Branch } from '../branch/entities/branch/branch.entity';
 
-
 @Injectable()
 export class MenuService {
   constructor(
     @InjectRepository(Menu)
     private readonly menuRepository: Repository<Menu>,
-      // Inject repositories ของ entities ที่เกี่ยวข้อง
-      @InjectRepository(Category)
-      private readonly categoryRepository: Repository<Category>,
-  
-      @InjectRepository(Owner)
-      private readonly ownerRepository: Repository<Owner>,
-  
-      @InjectRepository(Branch)
-      private readonly branchRepository: Repository<Branch>,
+    // Inject repositories ของ entities ที่เกี่ยวข้อง
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+
+    @InjectRepository(Owner)
+    private readonly ownerRepository: Repository<Owner>,
+
+    @InjectRepository(Branch)
+    private readonly branchRepository: Repository<Branch>,
   ) {}
   // * create a new menu
   async create(createMenuDto: CreateMenuDto): Promise<Menu> {
     const { category_id, owner_id, branch_id, ...menuData } = createMenuDto;
     // * Load Category
-    const category = await this.categoryRepository.findOne({ where: { category_id } });
+    const category = await this.categoryRepository.findOne({
+      where: { category_id },
+    });
     if (!category) {
       throw new NotFoundException(`Category with ID ${category_id} not found`);
     }
@@ -40,7 +41,9 @@ export class MenuService {
     }
 
     // * Load Branch
-    const branch = await this.branchRepository.findOne({ where: { branch_id } });
+    const branch = await this.branchRepository.findOne({
+      where: { branch_id },
+    });
     if (!branch) {
       throw new NotFoundException(`Branch with ID ${branch_id} not found`);
     }

@@ -15,11 +15,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
 import { OwnerService } from './owner.service';
 import { Readable } from 'stream';
-import { sendTemporaryPasswordEmail } from '../utils/send-email.util';
 import { UpdatePasswordDto } from './dto/update-password/update-password.dto';
 import * as csvParser from 'csv-parser';
 import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
 import { VerifyOtpDto } from './dto/verify-otp-owner/verify-otp-owner.dto';
+import { sendTemporaryPasswordEmail } from 'src/utils/send-email.util';
 
 @Controller('owners')
 export class OwnerController {
@@ -52,16 +52,69 @@ export class OwnerController {
   }
 
   // * Function upload and read CSV with owner data
+  // @Post('upload-csv')
+  // @UseInterceptors(FileInterceptor('file'))
+  // async uploadCsv(@UploadedFile() file: Express.Multer.File) {
+  //   // * Create an array to store the owner data from the CSV file.
+  //   if (!file) {
+  //     throw new HttpException('No file provided', HttpStatus.BAD_REQUEST);
+  //   }
+
+  //   const owners: CreateOwnerDto[] = [];
+
+  //   // * Convert the uploaded file (buffer) to a readable stream and use csv-parser to read the CSV data.
+  //   const stream = Readable.from(file.buffer.toString());
+  //   return new Promise((resolve, reject) => {
+  //     stream
+  //       // * Read the CSV data
+  //       .pipe(csvParser())
+  //       .on('data', async (row) => {
+  //         // * Generate a random temporary password
+  //         const tempPassword = Math.random().toString(36).slice(-8);
+  //         // * Create a DTO for Owner from data in each row of the CSV file.
+  //         const createOwnerDto: CreateOwnerDto = {
+  //           owner_name: row.owner_name,
+  //           contact_info: row.contact_info,
+  //           email: row.email,
+  //           password: tempPassword,
+  //         };
+  //         // * Send temporary password to the user's email
+  //         await sendTemporaryPasswordEmail(createOwnerDto.email, tempPassword);
+  //         // * Add the owner data to the array for later processing
+  //         owners.push(createOwnerDto);
+  //       })
+  //       .on('end', async () => {
+  //         try {
+  //           // * Loop through each owner data into the database.
+  //           for (const owner of owners) {
+  //             await this.ownerService.create(owner);
+  //           }
+  //           resolve({ message: 'CSV data uploaded successfully' });
+  //         } catch (error) {
+  //           reject(
+  //             new HttpException(
+  //               'Error uploading CSV data',
+  //               HttpStatus.INTERNAL_SERVER_ERROR,
+  //             ),
+  //           );
+  //         }
+  //       })
+  //       .on('error', (error) => {
+  //         reject(
+  //           new HttpException(
+  //             `Error reading CSV file: ${error.message}`,
+  //             HttpStatus.BAD_REQUEST,
+  //           ),
+  //         );
+  //       });
+  //   });
+  // }
+
   @Post('upload-csv')
   @UseInterceptors(FileInterceptor('file'))
   async uploadCsv(@UploadedFile() file: Express.Multer.File) {
     // * Create an array to store the owner data from the CSV file.
-    if (!file) {
-      throw new HttpException('No file provided', HttpStatus.BAD_REQUEST);
-    }
-
     const owners: CreateOwnerDto[] = [];
-
     // * Convert the uploaded file (buffer) to a readable stream and use csv-parser to read the CSV data.
     const stream = Readable.from(file.buffer.toString());
     return new Promise((resolve, reject) => {
@@ -78,17 +131,21 @@ export class OwnerController {
             email: row.email,
             password: tempPassword,
           };
+          console.log('createOwnerDto', createOwnerDto);
           // * Send temporary password to the user's email
           await sendTemporaryPasswordEmail(createOwnerDto.email, tempPassword);
           // * Add the owner data to the array for later processing
           owners.push(createOwnerDto);
+          await this.ownerService.create(createOwnerDto);
+          console.log('EACH OWNERS', owners);
         })
         .on('end', async () => {
           try {
             // * Loop through each owner data into the database.
-            for (const owner of owners) {
-              await this.ownerService.create(owner);
-            }
+            console.log('OWNERS', owners);
+            // for (const owner of owners) {
+            //   await this.ownerService.create(owner);
+            // }
             resolve({ message: 'CSV data uploaded successfully' });
           } catch (error) {
             reject(
