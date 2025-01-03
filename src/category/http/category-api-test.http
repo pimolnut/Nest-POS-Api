@@ -3,7 +3,7 @@ POST http://localhost:3000/categories
 Content-Type: application/json
 
 {
-  "category_name": "Desert"
+  "category_name": "rice"
 }
 
 ### Get all Categories

@@ -4,10 +4,15 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Owner } from '../../owner/entities/owner/owner.entity';
 import { Category } from '../../category/entities/category/category.entity';
 import { Branch } from '../../branch/entities/branch/branch.entity';
+import { Size } from 'src/menu-options/entities/size.entity';
+import { Topping } from 'src/menu-options/entities/topping.entity';
+import { SweetnessLevel } from 'src/menu-options/entities/sweetness-level.entity';
+import { MenuType } from '../../menu-options/entities/menu-type.entity';
 
 @Entity()
 export class Menu {
@@ -40,4 +45,16 @@ export class Menu {
 
   @Column({ nullable: true })
   image_url: string;
+
+  @OneToMany(() => Size, (size) => size.menu, { cascade: true })
+  sizes: Size[];
+
+  @OneToMany(() => Topping, (topping) => topping.menu)
+  toppings: Topping[];
+
+  @OneToMany(() => SweetnessLevel, (sweetnessLevel) => sweetnessLevel.menu)
+  sweetnessLevels: SweetnessLevel[]; //
+
+  @OneToMany(() => MenuType, (menuType) => menuType.menu)
+  menuTypes: MenuType[];
 }

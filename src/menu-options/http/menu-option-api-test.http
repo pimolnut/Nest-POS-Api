@@ -1,0 +1,25 @@
+POST http://localhost:3000/menu-options/sweetness
+Content-Type: application/json
+
+{
+  "level_name": "หวาน 10%",
+  "menu_id": 25
+}
+
+
+GET http://localhost:3000/sweetness-levels
+
+
+GET http://localhost:3000/sweetness-levels/menu/25 
+
+
+DELETE http://localhost:3000/sweetness-levels/1
+
+
+POST http://localhost:3000/toppings
+Content-Type: application/json
+
+{
+  "topping_name": "ไข่มุก",
+  "price": 10.00
+}
