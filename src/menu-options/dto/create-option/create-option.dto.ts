@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsInt,
   IsNotEmpty,
+  IsArray,
 } from 'class-validator';
 
 export class CreateOptionDto {
@@ -14,7 +15,8 @@ export class CreateOptionDto {
   @IsOptional()
   price?: number;
 
-  @IsInt()
+  @IsArray()
   @IsNotEmpty()
+  @IsInt({ each: true })
   menu_id: number;
 }

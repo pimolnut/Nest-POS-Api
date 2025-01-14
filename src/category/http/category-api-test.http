@@ -3,14 +3,25 @@ POST http://localhost:3000/categories
 Content-Type: application/json
 
 {
-  "category_name": "rice"
+  "category_name": "น้ำสดชื่น"
 }
 
 ### Get all Categories
 GET http://localhost:3000/categories
 
 ### Get a specific Category by ID
-GET http://localhost:3000/categories/1
+GET http://localhost:3000/categories/13
 
 ### Delete a Category by ID
 DELETE http://localhost:3000/categories/1
+
+POST http://localhost:3000/categories/link-menus
+Content-Type: application/json
+
+{
+  "category_id": 14,
+  "menu_ids": [20, 22, 23]
+}
+
+GET http://localhost:3000/categories/14/menus
+Content-Type: application/json

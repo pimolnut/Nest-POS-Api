@@ -2,9 +2,10 @@ POST http://localhost:3000/menu-options/sweetness
 Content-Type: application/json
 
 {
-  "level_name": "หวาน 10%",
-  "menu_id": 25
+  "level_name": "หวาน 50%",
+  "menu_id": 26
 }
+
 
 
 GET http://localhost:3000/sweetness-levels
