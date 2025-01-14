@@ -8,8 +8,6 @@ import { OwnerModule } from './owner/owner.module';
 import { MenuModule } from './menus/menu.module';
 import { CategoryModule } from './category/category.module';
 import { BranchModule } from './branch/branch.module';
-import { SizeModule } from './size/size.module';
-import { SweetnessLevelModule } from './sweet_level/sweetness-level.module';
 import { MenuOptionsModule } from './menu-options/menu-options.module';
 
 @Module({
@@ -24,8 +22,6 @@ import { MenuOptionsModule } from './menu-options/menu-options.module';
     MenuModule,
     CategoryModule,
     BranchModule,
-    SizeModule,
-    SweetnessLevelModule,
     MenuOptionsModule,
   ],
 })
