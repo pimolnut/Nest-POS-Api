@@ -8,7 +8,7 @@ import {
 
 export class CreateOptionDto {
   @IsString()
-  name: string;
+  add_on_name: string;
 
   @IsDecimal()
   @IsOptional()

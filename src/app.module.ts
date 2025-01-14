@@ -9,7 +9,6 @@ import { MenuModule } from './menus/menu.module';
 import { CategoryModule } from './category/category.module';
 import { BranchModule } from './branch/branch.module';
 import { SizeModule } from './size/size.module';
-import { ToppingModule } from './topping/topping.module';
 import { SweetnessLevelModule } from './sweet_level/sweetness-level.module';
 import { MenuOptionsModule } from './menu-options/menu-options.module';
 
@@ -26,7 +25,6 @@ import { MenuOptionsModule } from './menu-options/menu-options.module';
     CategoryModule,
     BranchModule,
     SizeModule,
-    ToppingModule,
     SweetnessLevelModule,
     MenuOptionsModule,
   ],

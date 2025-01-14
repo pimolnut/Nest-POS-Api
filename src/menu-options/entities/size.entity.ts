@@ -15,7 +15,7 @@ export class Size {
   @Column()
   size_name: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   size_price: number;
 
   @ManyToOne(() => Menu, (menu) => menu.sizes, {

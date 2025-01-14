@@ -18,11 +18,11 @@ GET http://localhost:3000/orders
 GET http://localhost:3000/orders/1
 
 ### Update Order
-PATCH http://localhost:3000/orders/1
+PATCH http://localhost:3000/orders/10
 Content-Type: application/json
 
 {
-  "status": "completed"
+  "status": "cancel"
 }
 
 ### Delete Order

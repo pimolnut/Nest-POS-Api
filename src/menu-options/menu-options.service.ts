@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SweetnessLevel } from './entities/sweetness-level.entity';
 import { Size } from './entities/size.entity';
-import { Topping } from './entities/topping.entity';
 import { MenuType } from './entities/menu-type.entity';
 import { Menu } from 'src/menus/entities/menu.entity';
 import { CreateOptionDto } from './dto/create-option/create-option.dto';
+import { AddOn } from './entities/add-on.entity';
 
 @Injectable()
 export class MenuOptionsService {
@@ -15,8 +15,8 @@ export class MenuOptionsService {
     private readonly sweetnessRepository: Repository<SweetnessLevel>,
     @InjectRepository(Size)
     private readonly sizeRepository: Repository<Size>,
-    @InjectRepository(Topping)
-    private readonly toppingRepository: Repository<Topping>,
+    @InjectRepository(AddOn)
+    private readonly addOnRepository: Repository<AddOn>,
     @InjectRepository(MenuType)
     private readonly menuTypeRepository: Repository<MenuType>,
     @InjectRepository(Menu)
@@ -33,8 +33,8 @@ export class MenuOptionsService {
       case 'size':
         repository = this.sizeRepository;
         break;
-      case 'topping':
-        repository = this.toppingRepository;
+      case 'add-ons':
+        repository = this.addOnRepository;
         break;
       case 'menu-type':
         repository = this.menuTypeRepository;
@@ -80,9 +80,9 @@ export class MenuOptionsService {
         repository = this.sizeRepository;
         relationField = 'sizes';
         break;
-      case 'topping':
-        repository = this.toppingRepository;
-        relationField = 'toppings';
+      case 'add-ons':
+        repository = this.addOnRepository;
+        relationField = 'add-ons';
         break;
       case 'menu-type':
         repository = this.menuTypeRepository;

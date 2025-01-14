@@ -19,7 +19,7 @@ GET http://localhost:3000/menus
 GET http://localhost:3000/menus/6
 
 ### Update a Menu by ID
-PATCH http://localhost:3000/menus/6
+PATCH http://localhost:3000/menus/25
 Content-Type: application/json
 
 {
@@ -29,4 +29,4 @@ Content-Type: application/json
 }
 
 ### Delete a Menu by ID
-DELETE http://localhost:3000/menus/1
+DELETE http://localhost:3000/menus/32

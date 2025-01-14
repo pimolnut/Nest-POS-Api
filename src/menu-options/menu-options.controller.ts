@@ -8,7 +8,7 @@ export class MenuOptionsController {
 
   @Post(':type')
   createOption(
-    @Param('type') type: 'sweetness' | 'size' | 'topping' | 'menu-type',
+    @Param('type') type: 'sweetness' | 'size' | 'add-ons' | 'menu-type',
     @Body() createOptionDto: CreateOptionDto,
   ) {
     return this.menuOptionsService.createOption(type, createOptionDto);
@@ -16,7 +16,7 @@ export class MenuOptionsController {
 
   @Post(':type/link/:menu_id/:option_id')
   linkOptionToMenu(
-    @Param('type') type: 'sweetness' | 'size' | 'topping' | 'menu-type',
+    @Param('type') type: 'sweetness' | 'size' | 'add-ons' | 'menu-type',
     @Param('menu_id') menu_id: number,
     @Param('option_id') option_id: number,
   ) {

@@ -10,7 +10,7 @@ import { Owner } from '../../owner/entities/owner/owner.entity';
 import { Category } from '../../category/entities/category/category.entity';
 import { Branch } from '../../branch/entities/branch/branch.entity';
 import { Size } from 'src/menu-options/entities/size.entity';
-import { Topping } from 'src/menu-options/entities/topping.entity';
+import { AddOn } from 'src/menu-options/entities/add-on.entity';
 import { SweetnessLevel } from 'src/menu-options/entities/sweetness-level.entity';
 import { MenuType } from '../../menu-options/entities/menu-type.entity';
 
@@ -49,8 +49,8 @@ export class Menu {
   @OneToMany(() => Size, (size) => size.menu, { cascade: true })
   sizes: Size[];
 
-  @OneToMany(() => Topping, (topping) => topping.menu)
-  toppings: Topping[];
+  @OneToMany(() => AddOn, (addOn) => addOn.menu, { cascade: true })
+  addOns: AddOn[]; // เพิ่มความสัมพันธ์กับ AddOn
 
   @OneToMany(() => SweetnessLevel, (sweetnessLevel) => sweetnessLevel.menu)
   sweetnessLevels: SweetnessLevel[]; //
