@@ -1,5 +1,6 @@
-import { IsEnum, IsInt, IsNotEmpty, IsString, IsDate } from 'class-validator';
+import { IsEnum, IsInt, IsNotEmpty, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Column } from 'typeorm';
 
 export enum CancelStatus {
   RefundComplete = 'คืนเงินเสร็จสิ้น',
@@ -23,11 +24,16 @@ export class CreateOrderDto {
   @IsNotEmpty()
   queue_number: number;
 
-  @IsString()
-  @IsNotEmpty()
+  @Column({ default: 'รอทำ' }) // สถานะเริ่มต้น
   status: string;
 
   @IsEnum(CancelStatus)
   @IsNotEmpty()
   cancel_status: CancelStatus;
+
+  @Column({ nullable: true })
+  customer_name: string;
+
+  @Column({ nullable: true })
+  contact: string;
 }

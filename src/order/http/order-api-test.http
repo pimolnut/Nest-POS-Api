@@ -6,7 +6,7 @@ Content-Type: application/json
   "customer_id": 123,
   "order_date": "2023-09-16T08:00:00Z",
   "total_price": 500,
-  "queue_number": 1,
+  "queue_number": 3,
   "status": "processing",
   "cancel_status": "ยังไม่คืนเงิน"
 }
@@ -15,7 +15,7 @@ Content-Type: application/json
 GET http://localhost:3000/orders
 
 ### Get Order by ID
-GET http://localhost:3000/orders/1
+GET http://localhost:3000/orders/13
 
 ### Update Order
 PATCH http://localhost:3000/orders/10
@@ -27,3 +27,12 @@ Content-Type: application/json
 
 ### Delete Order
 DELETE http://localhost:3000/orders/1
+
+
+PATCH http://localhost:3000/orders/14/cancel
+Content-Type: application/json
+{
+  "order_id": 14,
+  "customer_name": "John Doe",
+  "contact": "123456789"
+}

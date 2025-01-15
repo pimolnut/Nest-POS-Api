@@ -14,6 +14,7 @@ import { Response } from 'express';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order/update-order.dto';
+import { CancelOrderDto } from './dto/cancel-order/Cancel-order.dto';
 
 @Controller('orders')
 export class OrderController {
@@ -69,5 +70,13 @@ export class OrderController {
     }
     await this.orderService.remove(+id);
     return res.status(HttpStatus.NO_CONTENT).send();
+  }
+
+  @Patch(':id/cancel')
+  async cancelOrder(
+    @Param('id') id: number,
+    @Body() cancelOrderDto: CancelOrderDto,
+  ) {
+    return this.orderService.cancelOrder(id, cancelOrderDto);
   }
 }
