@@ -9,10 +9,10 @@ import {
 import { Owner } from '../../owner/entities/owner/owner.entity';
 import { Category } from '../../category/entities/category/category.entity';
 import { Branch } from '../../branch/entities/branch/branch.entity';
-import { Size } from 'src/menu-options/entities/size.entity';
-import { AddOn } from 'src/menu-options/entities/add-on.entity';
-import { SweetnessLevel } from 'src/menu-options/entities/sweetness-level.entity';
-import { MenuType } from '../../menu-options/entities/menu-type.entity';
+import { Size } from 'src/menus/entities/size.entity';
+import { AddOn } from 'src/menus/entities/add-on.entity';
+import { SweetnessLevel } from 'src/menus/entities/sweetness-level.entity';
+import { MenuType } from './menu-type.entity';
 
 @Entity()
 export class Menu {

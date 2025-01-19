@@ -3,7 +3,7 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category/create-category.dto';
 import { LinkMenuToCategoryDto } from './dto/link-menu-to-category/link-menu-to-category.dto';
 
-@Controller('categories')
+@Controller('owner/categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

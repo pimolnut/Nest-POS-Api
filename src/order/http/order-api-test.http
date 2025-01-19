@@ -1,5 +1,5 @@
 ### Create Order
-POST http://localhost:3000/orders
+POST http://localhost:3000/employee/orders
 Content-Type: application/json
 
 {
@@ -12,13 +12,13 @@ Content-Type: application/json
 }
 
 ### Get All Orders
-GET http://localhost:3000/orders
+GET http://localhost:3000/employee/orders
 
 ### Get Order by ID
-GET http://localhost:3000/orders/13
+GET http://localhost:3000/employee/orders/12
 
 ### Update Order
-PATCH http://localhost:3000/orders/10
+PATCH http://localhost:3000/employee/orders/10
 Content-Type: application/json
 
 {
@@ -26,13 +26,13 @@ Content-Type: application/json
 }
 
 ### Delete Order
-DELETE http://localhost:3000/orders/1
+DELETE http://localhost:3000/employee/orders/1
 
 
-PATCH http://localhost:3000/orders/14/cancel
+PATCH http://localhost:3000/employee/orders/15/cancel
 Content-Type: application/json
 {
-  "order_id": 14,
+  "order_id": 15,
   "customer_name": "John Doe",
   "contact": "123456789"
 }

@@ -1,5 +1,5 @@
 ### Create a new Menu
-POST http://localhost:3000/menus
+POST http://localhost:3000/owner/menus
 Content-Type: application/json
 {
   "store_id": 1,
@@ -13,13 +13,13 @@ Content-Type: application/json
 }
 
 ### Get all Menus
-GET http://localhost:3000/menus
+GET http://localhost:3000/owner/menus
 
 ### Get a specific Menu by ID
-GET http://localhost:3000/menus/6
+GET http://localhost:3000/owner/menus/6
 
 ### Update a Menu by ID
-PATCH http://localhost:3000/menus/25
+PATCH http://localhost:3000/owner/menus/25
 Content-Type: application/json
 
 {
@@ -29,4 +29,4 @@ Content-Type: application/json
 }
 
 ### Delete a Menu by ID
-DELETE http://localhost:3000/menus/32
+DELETE http://localhost:3000/owner/menus/32

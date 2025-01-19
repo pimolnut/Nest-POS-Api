@@ -28,7 +28,7 @@ export class BranchService {
     // สร้าง Branch ใหม่พร้อม map owner
     const newBranch = this.branchRepository.create({
       ...branchData,
-      owner,  // map owner ให้กับ Branch
+      owner, // map owner ให้กับ Branch
     });
 
     return this.branchRepository.save(newBranch);

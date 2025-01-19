@@ -7,15 +7,15 @@ Content-Type: application/json
 }
 
 ### Get all Categories
-GET http://localhost:3000/categories
+GET http://localhost:3000/owner/categories
 
 ### Get a specific Category by ID
-GET http://localhost:3000/categories/13
+GET http://localhost:3000/owner/categories/13
 
 ### Delete a Category by ID
-DELETE http://localhost:3000/categories/1
+DELETE http://localhost:3000/owner/categories/1
 
-POST http://localhost:3000/categories/link-menus
+POST http://localhost:3000/owner/categories/link-menus
 Content-Type: application/json
 
 {
@@ -23,5 +23,5 @@ Content-Type: application/json
   "menu_ids": [20, 22, 23]
 }
 
-GET http://localhost:3000/categories/14/menus
+GET http://localhost:3000/owner/categories/14/menus
 Content-Type: application/json

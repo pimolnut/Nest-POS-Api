@@ -3,18 +3,26 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MenuService } from './menu.service';
 import { MenuController } from './menu.controller';
 import { Menu } from './entities/menu.entity';
-import { CategoryModule } from '../category/category.module';
-import { OwnerModule } from '../owner/owner.module';
-import { BranchModule } from '../branch/branch.module';
+
+import { SweetnessLevel } from './entities/sweetness-level.entity';
+import { Size } from './entities/size.entity';
+import { AddOn } from './entities/add-on.entity';
+import { MenuType } from './entities/menu-type.entity';
+
+// เชื่อมโยง StockModule (หรือ IngredientModule หากต้องการ)
+import { CategoryModule } from 'src/category/category.module';
+import { OwnerModule } from 'src/owner/owner.module';
+import { BranchModule } from 'src/branch/branch.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Menu]),
+    TypeOrmModule.forFeature([Menu, AddOn, MenuType, Size, SweetnessLevel]),
     CategoryModule,
     OwnerModule,
     BranchModule,
   ],
   controllers: [MenuController],
   providers: [MenuService],
+  exports: [MenuService],
 })
 export class MenuModule {}

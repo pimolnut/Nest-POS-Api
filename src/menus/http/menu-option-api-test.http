@@ -1,4 +1,4 @@
-POST http://localhost:3000/menu-options/sweetness
+POST http://localhost:3000/owner/menus/options/sweetness
 Content-Type: application/json
 
 {
@@ -8,16 +8,16 @@ Content-Type: application/json
 
 
 
-GET http://localhost:3000/sweetness-levels
+// GET http://localhost:3000/sweetness-levels
 
 
-GET http://localhost:3000/sweetness-levels/menu/25 
+# GET http://localhost:3000/sweetness-levels/menu/25 
 
 
-DELETE http://localhost:3000/sweetness-levels/1
+# DELETE http://localhost:3000/sweetness-levels/1
 
 
-POST http://localhost:3000/menu-options/add-ons
+POST http://localhost:3000/owner/menus/options/add-ons
 Content-Type: application/json
 
 {
@@ -26,7 +26,7 @@ Content-Type: application/json
   "menu_id": 25
 }
 
-POST http://localhost:3000/menu-options/size
+POST http://localhost:3000/owner/menus/options/size
 Content-Type: application/json
 
 {
@@ -35,7 +35,7 @@ Content-Type: application/json
   "menu_id": 25
 }
 
-POST http://localhost:3000/menu-options/menu-type
+POST http://localhost:3000/owner/menus/options/menu-type
 Content-Type: application/json
 
 {

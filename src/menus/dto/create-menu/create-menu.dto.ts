@@ -1,21 +1,19 @@
-import { IsString, IsInt, IsOptional, IsDecimal, IsUrl } from 'class-validator';
+import { IsInt, IsString, IsOptional, IsNotEmpty } from 'class-validator';
 
 export class CreateMenuDto {
+  @IsString()
+  @IsNotEmpty()
+  menu_name: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
   @IsInt()
-  store_id: number;
+  price: number;
 
   @IsInt()
   category_id: number;
-
-  @IsString()
-  menu_name: string;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsDecimal()
-  price: number;
 
   @IsInt()
   owner_id: number;
@@ -23,7 +21,7 @@ export class CreateMenuDto {
   @IsInt()
   branch_id: number;
 
-  @IsUrl()
   @IsOptional()
+  @IsString()
   image_url?: string;
 }

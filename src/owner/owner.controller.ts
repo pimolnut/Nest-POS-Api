@@ -21,7 +21,7 @@ import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
 import { VerifyOtpDto } from './dto/verify-otp-owner/verify-otp-owner.dto';
 import { sendTemporaryPasswordEmail } from 'src/utils/send-email.util';
 
-@Controller('owners')
+@Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
   @Patch('reset-password/:id')

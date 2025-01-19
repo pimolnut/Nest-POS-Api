@@ -1,5 +1,5 @@
 ### Register New Owner
-POST http://localhost:3000/owners/register
+POST http://localhost:3000/owner/register
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### Login Owner
-POST http://localhost:3000/owners/login
+POST http://localhost:3000/owner/login
 Content-Type: application/json
 
 {
@@ -20,17 +20,17 @@ Content-Type: application/json
 
 
 ### Upload CSV with Owner Data
-POST http://localhost:3000/owners/upload-csv
+POST http://localhost:3000/owner/upload-csv
 Content-Type: multipart/form-data
 file=@./uploads/owners.csv
 
-POST http://localhost:3000/owners/forgot-password
+POST http://localhost:3000/owner/forgot-password
 Content-Type: application/json
 {
   "usernameOrEmail": "new1@eie.com"
 }
 
-POST http://localhost:3000/owners/verify-otp
+POST http://localhost:3000/owner/verify-otp
 Content-Type: application/json
 {
   "usernameOrEmail": "new1@eie.com",
@@ -38,7 +38,7 @@ Content-Type: application/json
 }
 
 
-POST http://localhost:3000/owners/reset-password
+POST http://localhost:3000/owner/reset-password
 Content-Type: application/json
 {
   "usernameOrEmail": "new1@eie.com",
@@ -47,7 +47,7 @@ Content-Type: application/json
 
 
 ### Reset Password
-PATCH http://localhost:3000/owners/reset-password/25
+PATCH http://localhost:3000/owner/reset-password/25
 Content-Type: application/json
 
 {
