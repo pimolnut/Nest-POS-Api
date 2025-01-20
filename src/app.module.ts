@@ -8,6 +8,7 @@ import { OwnerModule } from './owner/owner.module';
 import { MenuModule } from './menus/menu.module';
 import { CategoryModule } from './category/category.module';
 import { BranchModule } from './branch/branch.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BranchModule } from './branch/branch.module';
     MenuModule,
     CategoryModule,
     BranchModule,
+    DashboardModule,
   ],
 })
 export class AppModule {}
