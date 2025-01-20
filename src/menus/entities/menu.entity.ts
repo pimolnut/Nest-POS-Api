@@ -22,7 +22,7 @@ export class Menu {
   @Column()
   store_id: number;
 
-  @ManyToOne(() => Category, { nullable: false })
+  @ManyToOne(() => Category, { nullable: true })
   @JoinColumn({ name: 'category_id' })
   category: Category;
 

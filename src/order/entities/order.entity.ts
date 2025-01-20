@@ -61,7 +61,7 @@ export class Order {
   customer_name: string; // ชื่อลูกค้า
 
   @Column({ nullable: true })
-  contact: string; // เบอร์โทรลูกค้า
+  customer_contact: string; // เบอร์โทรลูกค้า
 
   @Column({
     type: 'enum',

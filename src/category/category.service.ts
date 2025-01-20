@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Category } from './entities/category/category.entity';
-import { CreateCategoryDto } from './dto/create-category/create-category.dto';
 import { LinkMenuToCategoryDto } from './dto/link-menu-to-category/link-menu-to-category.dto';
 import { Menu } from '../menus/entities/menu.entity';
+import { CreateCategoryDto } from './dto/create-category/create-category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -29,16 +29,39 @@ export class CategoryService {
     return category;
   }
 
+  // async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+  //   const newCategory = this.categoryRepository.create(createCategoryDto);
+  //   return this.categoryRepository.save(newCategory);
+  // }
+
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
-    const newCategory = this.categoryRepository.create(createCategoryDto);
-    return this.categoryRepository.save(newCategory);
+    const { category_name, menu_id } = createCategoryDto;
+
+    // สร้างหมวดหมู่ใหม่
+    const newCategory = this.categoryRepository.create({ category_name });
+    const savedCategory = await this.categoryRepository.save(newCategory);
+
+    const menus = await this.menuRepository.findBy({ menu_id: In(menu_id) });
+    // ลิงก์เมนูที่ระบุเข้ากับหมวดหมู่
+    // const menus = await this.menuRepository.findByIds(menu_id);
+    if (menus.length !== menu_id.length) {
+      throw new NotFoundException(`Some menus with IDs ${menu_id} not found`);
+    }
+
+    menus.forEach((menu) => {
+      menu.category = savedCategory;
+    });
+
+    await this.menuRepository.save(menus);
+
+    return savedCategory;
   }
 
   // เพิ่มฟังก์ชันสำหรับลิงก์เมนูเข้ากับหมวดหมู่
   async linkMenusToCategory(
     linkMenuToCategoryDto: LinkMenuToCategoryDto,
   ): Promise<Category> {
-    const { category_id, menu_ids } = linkMenuToCategoryDto;
+    const { category_id, menu_id } = linkMenuToCategoryDto;
 
     // ตรวจสอบว่าหมวดหมู่มีอยู่หรือไม่
     const category = await this.categoryRepository.findOne({
@@ -49,9 +72,9 @@ export class CategoryService {
     }
 
     // ดึงเมนูทั้งหมดที่ต้องการลิงก์
-    const menus = await this.menuRepository.findByIds(menu_ids);
-    if (menus.length !== menu_ids.length) {
-      throw new NotFoundException(`Some menus with IDs ${menu_ids} not found`);
+    const menus = await this.menuRepository.findByIds(menu_id);
+    if (menus.length !== menu_id.length) {
+      throw new NotFoundException(`Some menus with IDs ${menu_id} not found`);
     }
 
     // อัปเดตเมนูให้ลิงก์กับหมวดหมู่

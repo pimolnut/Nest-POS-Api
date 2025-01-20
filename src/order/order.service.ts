@@ -80,7 +80,7 @@ export class OrderService {
     if (order.status === 'paid' || order.status === 'processing') {
       order.status = 'canceled';
       order.customer_name = cancelOrderDto.customer_name;
-      order.contact = cancelOrderDto.contact;
+      order.customer_contact = cancelOrderDto.contact;
     } else {
       throw new Error('Cannot cancel an unpaid order');
     }

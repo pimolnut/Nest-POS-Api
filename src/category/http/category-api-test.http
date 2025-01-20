@@ -10,7 +10,7 @@ Content-Type: application/json
 GET http://localhost:3000/owner/categories
 
 ### Get a specific Category by ID
-GET http://localhost:3000/owner/categories/13
+GET http://localhost:3000/owner/categories/23
 
 ### Delete a Category by ID
 DELETE http://localhost:3000/owner/categories/1
@@ -20,8 +20,17 @@ Content-Type: application/json
 
 {
   "category_id": 14,
-  "menu_ids": [20, 22, 23]
+  "menu_id": [20, 22, 23]
 }
 
-GET http://localhost:3000/owner/categories/14/menus
+GET http://localhost:3000/owner/categories/25/menus
 Content-Type: application/json
+
+
+POST http://localhost:3000/owner/categories
+Content-Type: application/json
+
+{
+  "category_name": "น้ำชื่นใจ",
+  "menu_id": [20, 22, 23, 24]
+}

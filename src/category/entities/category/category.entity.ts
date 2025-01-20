@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Menu } from '../../../menus/entities/menu.entity';
 
 @Entity()
@@ -10,5 +16,6 @@ export class Category {
   category_name: string;
 
   @OneToMany(() => Menu, (menu) => menu.category)
+  @JoinColumn({ name: 'menu_id' })
   menu: Menu[];
 }
