@@ -11,28 +11,27 @@ export class DashboardService {
     private readonly salesSummaryRepository: Repository<SalesSummary>,
   ) {}
 
-  async getStockSummary(): Promise<Overview> {
-    console.log('TESTTTHELLO');
+  async getStockSummary(date: Date): Promise<Overview> {
     // Fetch data from the database for the given date
-    // const salesSummaries = await this.salesSummaryRepository.find({
-    // //   where: {
-    // //     date,
-    // //   },
-    // });
+    const salesSummaries = await this.salesSummaryRepository.find({
+      where: {
+        date,
+      },
+    });
 
-    // // Aggregate data for the response
-    // const totalRevenue = salesSummaries.reduce(
-    //   (sum, item) => sum + item.total_revenue,
-    //   0,
-    // );
-    // const totalOrders = salesSummaries.reduce(
-    //   (sum, item) => sum + item.total_orders,
-    //   0,
-    // );
-    // const canceledOrders = salesSummaries.reduce(
-    //   (sum, item) => sum + item.canceled_orders,
-    //   0,
-    // );
+    // Aggregate data for the response
+    const totalRevenue = salesSummaries.reduce(
+      (sum, item) => sum + item.total_revenue,
+      0,
+    );
+    const totalOrders = salesSummaries.reduce(
+      (sum, item) => sum + item.total_orders,
+      0,
+    );
+    const canceledOrders = salesSummaries.reduce(
+      (sum, item) => sum + item.canceled_orders,
+      0,
+    );
 
     // Hardcoded top_three and monthly_revenue for now
     const topThree: TopItemDto[] = [
@@ -47,9 +46,9 @@ export class DashboardService {
     ];
 
     return {
-      total_revenue: 1000,
-      total_orders: 12,
-      canceled_orders: 1,
+      total_revenue: totalRevenue,
+      total_orders: totalOrders,
+      canceled_orders: canceledOrders,
       top_three: topThree,
       monthly_revenue: monthlyRevenue,
     };

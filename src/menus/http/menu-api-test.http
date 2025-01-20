@@ -7,8 +7,8 @@ Content-Type: application/json
   "menu_name": "matcha latte",
   "description": "Delicious spaghetti with tomato sauce",
   "price": 1234,
-  "owner_id": 41,
-  "branch_id": 5,
+  "owner_id": 2,
+  "branch_id": 4,
   "image_url": "http://example.com/spaghetti.jpg"
 }
 

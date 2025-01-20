@@ -1,5 +1,5 @@
 ### Create a new Category
-POST http://localhost:3000/categories
+POST http://localhost:3000/owner/categories
 Content-Type: application/json
 
 {

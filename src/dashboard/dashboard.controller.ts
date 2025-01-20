@@ -7,7 +7,7 @@ export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
   @Get('stock-summary/:date')
-  async getStockSummary(): Promise<Overview> {
-    return this.dashboardService.getStockSummary();
+  async getStockSummary(@Param('date') date: string): Promise<Overview> {
+    return this.dashboardService.getStockSummary(new Date(date));
   }
 }

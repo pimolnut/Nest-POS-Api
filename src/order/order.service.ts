@@ -1,20 +1,81 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { CreateOrderDto } from './dto/create-order/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order/update-order.dto';
 import { CancelOrderDto } from './dto/cancel-order/Cancel-order.dto';
+import { SalesSummary } from 'src/dashboard/entities/sales_summary';
 
 @Injectable()
 export class OrderService {
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
+    @InjectRepository(SalesSummary)
+    private salesSummaryRepository: Repository<SalesSummary>,
   ) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
+    // Convert order_date to Date if it's a string
+    if (typeof createOrderDto.order_date === 'string') {
+      const parsedDate = new Date(createOrderDto.order_date);
+      if (isNaN(parsedDate.getTime())) {
+        throw new Error('Invalid date format');
+      }
+      createOrderDto.order_date = parsedDate;
+    }
+
+    // Calculate start and end of the day for comparison
+    const orderDateOnly = new Date(
+      createOrderDto.order_date.toISOString().split('T')[0],
+    );
+    const startOfDay = new Date(orderDateOnly.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(orderDateOnly.setHours(23, 59, 59, 999));
+
+    let salesSummary = await this.salesSummaryRepository.findOne({
+      where: {
+        date: Between(startOfDay, endOfDay),
+      },
+    });
+
+    if (salesSummary) {
+      // Update total revenue and orders
+      salesSummary.total_revenue += createOrderDto.total_price;
+      salesSummary.total_orders += 1;
+      if (createOrderDto.cancel_status === null) {
+        salesSummary.canceled_orders += 1;
+      }
+      await this.salesSummaryRepository.save(salesSummary);
+    } else {
+      if (createOrderDto.cancel_status === null) {
+        // Create a new SalesSummary if no matching date exists
+        salesSummary = this.salesSummaryRepository.create({
+          date: orderDateOnly,
+          owner_id: 2, // Hardcoded for now, can come from DTO
+          total_revenue: createOrderDto.total_price,
+          total_orders: 1,
+          canceled_orders: 1,
+          branch: { branch_id: 4 }, // Hardcoded for now, can come from DTO
+        });
+      } else {
+        // Create a new SalesSummary if no matching date exists
+        salesSummary = this.salesSummaryRepository.create({
+          date: orderDateOnly,
+          owner_id: 2, // Hardcoded for now, can come from DTO
+          total_revenue: createOrderDto.total_price,
+          total_orders: 1,
+          canceled_orders: 0,
+          branch: { branch_id: 4 }, // Hardcoded for now, can come from DTO
+        });
+      }
+
+      await this.salesSummaryRepository.save(salesSummary);
+    }
+
+    // Proceed to create the order
     const newOrder = this.orderRepository.create(createOrderDto);
+    console.log(newOrder.order_date);
     return this.orderRepository.save(newOrder);
   }
 
