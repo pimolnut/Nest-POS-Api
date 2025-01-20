@@ -48,8 +48,15 @@ export class CategoryService {
       throw new NotFoundException(`Some menus with IDs ${menu_id} not found`);
     }
 
+    // menus.forEach((menu) => {
+    //   menu.category = savedCategory;
+    // });
+
     menus.forEach((menu) => {
-      menu.category = savedCategory;
+      // ตรวจสอบว่า category ถูกตั้งค่าเป็น null ก่อน (optional)
+      if (!menu.category) {
+        menu.category = savedCategory; // เซ็ต category เป็น savedCategory
+      }
     });
 
     await this.menuRepository.save(menus);
