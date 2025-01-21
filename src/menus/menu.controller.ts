@@ -33,6 +33,13 @@ export class MenuController {
     return this.menuService.findAll();
   }
 
+    // * Get all menus send only name & description for list menu:customer
+    // @HttpCode(200)
+    // @Get()
+    // findAll() {
+    //   return this.menuService.findAll();
+    // }
+
   // * Create options like sweetness, size, etc.
   @Post('options/:type')
   createOption(
