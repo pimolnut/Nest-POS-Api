@@ -3,7 +3,7 @@ import { OrderService } from './order.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
-import { CancelStatus } from './dto/create-order/create-order.dto'; 
+import { CancelStatus } from './dto/create-order/create-order.dto';
 
 const mockOrderRepository = {
   findOneBy: jest.fn(),
@@ -22,7 +22,7 @@ describe('OrderService', () => {
         OrderService,
         {
           provide: getRepositoryToken(Order),
-          useValue: mockOrderRepository, 
+          useValue: mockOrderRepository,
         },
       ],
     }).compile();
@@ -37,37 +37,31 @@ describe('OrderService', () => {
 
   describe('create', () => {
     it('should create a new order', async () => {
-      
       const createOrderDto = {
         customer_id: 123,
         order_date: new Date(),
         total_price: 100,
         queue_number: 5,
         status: 'processing',
-        cancel_status: CancelStatus.RefundPending, 
+        cancel_status: CancelStatus.RefundPending,
       };
 
-      
       const mockOrder = {
         order_id: 1,
         ...createOrderDto,
       };
 
-     
-      mockOrderRepository.create.mockReturnValue(mockOrder);  
-      mockOrderRepository.save.mockResolvedValue(mockOrder);  
+      mockOrderRepository.create.mockReturnValue(mockOrder);
+      mockOrderRepository.save.mockResolvedValue(mockOrder);
 
-      
       const result = await service.create(createOrderDto);
 
-      
       expect(result).toEqual(mockOrder);
-      expect(repository.create).toHaveBeenCalledWith(createOrderDto); 
-      expect(repository.save).toHaveBeenCalledWith(mockOrder); 
+      expect(repository.create).toHaveBeenCalledWith(createOrderDto);
+      expect(repository.save).toHaveBeenCalledWith(mockOrder);
     });
   });
 
-  
   describe('findOne', () => {
     it('should return an order if found', async () => {
       const mockOrder = {
@@ -77,7 +71,7 @@ describe('OrderService', () => {
         total_price: 100,
         queue_number: 5,
         status: 'processing',
-        cancel_status: CancelStatus.RefundPending, 
+        cancel_status: CancelStatus.RefundPending,
       };
 
       mockOrderRepository.findOneBy.mockResolvedValue(mockOrder);
@@ -95,7 +89,6 @@ describe('OrderService', () => {
     });
   });
 
-  
   describe('update', () => {
     it('should update an existing order', async () => {
       const updateOrderDto = { status: 'completed' };
@@ -106,7 +99,7 @@ describe('OrderService', () => {
         total_price: 100,
         queue_number: 5,
         status: 'processing',
-        cancel_status: CancelStatus.RefundPending, 
+        cancel_status: CancelStatus.RefundPending,
       };
 
       mockOrderRepository.findOneBy.mockResolvedValue(mockOrder);
@@ -134,7 +127,6 @@ describe('OrderService', () => {
     });
   });
 
-  
   describe('remove', () => {
     it('should remove an order', async () => {
       mockOrderRepository.delete.mockResolvedValue({ affected: 1 });
@@ -147,7 +139,9 @@ describe('OrderService', () => {
     it('should throw NotFoundException if order not found', async () => {
       mockOrderRepository.delete.mockResolvedValue({ affected: 0 });
 
-      await expect(service.remove(1)).rejects.toThrowError('Order with ID 1 not found');
+      await expect(service.remove(1)).rejects.toThrowError(
+        'Order with ID 1 not found',
+      );
     });
   });
 });

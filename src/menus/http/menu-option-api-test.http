@@ -1,0 +1,45 @@
+POST http://localhost:3000/owner/menus/options/sweetness
+Content-Type: application/json
+
+{
+  "level_name": "หวาน 50%",
+  "menu_id": 26
+}
+
+
+
+// GET http://localhost:3000/sweetness-levels
+
+
+# GET http://localhost:3000/sweetness-levels/menu/25 
+
+
+# DELETE http://localhost:3000/sweetness-levels/1
+
+
+POST http://localhost:3000/owner/menus/options/add-ons
+Content-Type: application/json
+
+{
+  "add_on_name": "ไข่มุก",
+  "price": 10.00,
+  "menu_id": 25
+}
+
+POST http://localhost:3000/owner/menus/options/size
+Content-Type: application/json
+
+{
+  "size_name": "big",
+  "size_price": 10.00,
+  "menu_id": 25
+}
+
+POST http://localhost:3000/owner/menus/options/menu-type
+Content-Type: application/json
+
+{
+  "type_name": "hot",
+  "price_difference": 5,
+  "menu_id": 25
+}

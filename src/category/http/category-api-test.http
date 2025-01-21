@@ -1,0 +1,36 @@
+### Create a new Category
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "category_name": "น้ำสดชื่น"
+}
+
+### Get all Categories
+GET http://localhost:3000/owner/categories
+
+### Get a specific Category by ID
+GET http://localhost:3000/owner/categories/23
+
+### Delete a Category by ID
+DELETE http://localhost:3000/owner/categories/1
+
+POST http://localhost:3000/owner/categories/link-menus
+Content-Type: application/json
+
+{
+  "category_id": 14,
+  "menu_id": [20, 22, 23]
+}
+
+GET http://localhost:3000/owner/categories/25/menus
+Content-Type: application/json
+
+
+POST http://localhost:3000/owner/categories
+Content-Type: application/json
+
+{
+  "category_name": "น้ำชื่นใจ",
+  "menu_id": [20, 22, 23, 24]
+}

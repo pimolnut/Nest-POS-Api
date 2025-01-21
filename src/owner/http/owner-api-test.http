@@ -1,21 +1,56 @@
 ### Register New Owner
-POST http://localhost:3000/owners/register
+POST http://localhost:3000/owner/register
 Content-Type: application/json
 
 {
-  "owner_name": "FlukeloveMemee",
-  "contact_info": "+6696849768",
-  "email": "pos@gmail.com",
-  "password": "password123"
+  "owner_name": "memee",
+  "contact_info": "123456789",
+  "email": "neszw1@eie.com",
+  "password": "12342225"
 }
 
 ### Login Owner
-POST http://localhost:3000/owners/login
+POST http://localhost:3000/owner/login
 Content-Type: application/json
 
 {
-  "email": "pos@gmail.com",
-  "password": "password123"
+  "email": "new1@eie.com",
+  "password": "12345password"
 }
 
+
+### Upload CSV with Owner Data
+POST http://localhost:3000/owner/upload-csv
+Content-Type: multipart/form-data
+file=@./uploads/owners.csv
+
+POST http://localhost:3000/owner/forgot-password
+Content-Type: application/json
+{
+  "usernameOrEmail": "new1@eie.com"
+}
+
+POST http://localhost:3000/owner/verify-otp
+Content-Type: application/json
+{
+  "usernameOrEmail": "new1@eie.com",
+  "otp": "487873"
+}
+
+
+POST http://localhost:3000/owner/reset-password
+Content-Type: application/json
+{
+  "usernameOrEmail": "new1@eie.com",
+  "newPassword": "12123121dd21"
+}
+
+
+### Reset Password
+PATCH http://localhost:3000/owner/reset-password/25
+Content-Type: application/json
+
+{
+  "newPassword": "12345password"
+}
 
