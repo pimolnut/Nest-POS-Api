@@ -41,17 +41,13 @@ export class MenuService {
     private readonly branchRepository: Repository<Branch>,
   ) {}
 
-  // * สร้างเมนูใหม่
   async create(createMenuDto: CreateMenuDto): Promise<Menu> {
-    const { category_id, owner_id, branch_id, ...menuData } = createMenuDto;
-
-    // โหลดข้อมูล Category
-    const category = await this.categoryRepository.findOne({
-      where: { category_id },
-    });
-    if (!category) {
-      throw new NotFoundException(`Category with ID ${category_id} not found`);
-    }
+    const {
+      category_id, // ค่านี้อาจจะไม่ได้ถูกส่งเข้ามา
+      owner_id,
+      branch_id,
+      ...menuData
+    } = createMenuDto;
 
     // โหลดข้อมูล Owner
     const owner = await this.ownerRepository.findOne({ where: { owner_id } });
@@ -67,10 +63,23 @@ export class MenuService {
       throw new NotFoundException(`Branch with ID ${branch_id} not found`);
     }
 
+    let category = null;
+    if (category_id) {
+      // หากมีการส่ง category_id ให้โหลดข้อมูล Category
+      category = await this.categoryRepository.findOne({
+        where: { category_id },
+      });
+      if (!category) {
+        throw new NotFoundException(
+          `Category with ID ${category_id} not found`,
+        );
+      }
+    }
+
     // สร้างเมนูใหม่
     const newMenu = this.menuRepository.create({
       ...menuData,
-      category,
+      category, // กำหนด category ให้เป็น null หาก category_id ไม่ถูกส่งมา
       owner,
       branch,
     });
@@ -78,85 +87,15 @@ export class MenuService {
     return this.menuRepository.save(newMenu);
   }
 
-  // * เพิ่มความสัมพันธ์ระหว่าง Menu และ Ingredient
-  // async addIngredientToMenu(
-  //   menu_id: number,
-  //   ingredient_id: number,
-  //   quantity_used: number,
-  // ) {
-  //   const menu = await this.menuRepository.findOne({ where: { menu_id } });
-  //   if (!menu) {
-  //     throw new NotFoundException(`Menu with ID ${menu_id} not found`);
-  //   }
-
-  //   const ingredientLink = this.ingredientMenuLinkRepository.create({
-  //     menu,
-  //     ingredient: { ingredient_id } as any,
-  //     quantity_used,
-  //   });
-
-  //   return this.ingredientMenuLinkRepository.save(ingredientLink);
-  // }
-
-  // * อัปเดตปริมาณวัตถุดิบในเมนู
-  // async updateIngredientInMenu(
-  //   menu_ingredient_id: number,
-  //   quantity_used: number,
-  // ) {
-  //   const ingredientLink = await this.ingredientMenuLinkRepository.findOne({
-  //     where: { menu_ingredient_id },
-  //   });
-
-  //   if (!ingredientLink) {
-  //     throw new NotFoundException(
-  //       `IngredientMenuLink with ID ${menu_ingredient_id} not found`,
-  //     );
-  //   }
-
-  //   ingredientLink.quantity_used = quantity_used;
-  //   return this.ingredientMenuLinkRepository.save(ingredientLink);
-  // }
-
-  // * ลบวัตถุดิบออกจากเมนู
-  // async deleteIngredientFromMenu(menu_ingredient_id: number): Promise<void> {
-  //   const ingredientLink = await this.ingredientMenuLinkRepository.findOne({
-  //     where: { menu_ingredient_id },
-  //   });
-
-  //   if (!ingredientLink) {
-  //     throw new NotFoundException(
-  //       `IngredientMenuLink with ID ${menu_ingredient_id} not found`,
-  //     );
-  //   }
-
-  //   await this.ingredientMenuLinkRepository.remove(ingredientLink);
-  // }
-
-  // * ดึงวัตถุดิบทั้งหมดในเมนู
-  // async getIngredientsByMenu(menu_id: number) {
-  //   return this.ingredientMenuLinkRepository.find({
-  //     where: { menu: { menu_id } },
-  //     relations: ['menu', 'ingredient'],
-  //   });
-  // }
-
   // * สร้างตัวเลือกให้กับเมนู
   async createOption(type: string, createOptionDto: CreateOptionDto) {
     let repository: Repository<any>;
 
     switch (type) {
-      case 'sweetness':
-        repository = this.sweetnessRepository;
-        break;
-      case 'size':
-        repository = this.sizeRepository;
-        break;
       case 'add-ons':
         repository = this.addOnRepository;
         break;
-      case 'menu-type':
-        repository = this.menuTypeRepository;
-        break;
+      // Handle other types...
       default:
         throw new NotFoundException(`Invalid option type: ${type}`);
     }
@@ -171,7 +110,7 @@ export class MenuService {
     }
 
     const option = repository.create({
-      ...createOptionDto,
+      ...createOptionDto, // Ensure quantity_in_grams is included here
       menu,
     });
 

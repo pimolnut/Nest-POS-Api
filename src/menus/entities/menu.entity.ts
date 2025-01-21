@@ -22,9 +22,9 @@ export class Menu {
   @Column()
   store_id: number;
 
-  @ManyToOne(() => Category, { nullable: true })
+  @ManyToOne(() => Category, (category) => category.menu, { nullable: true })
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  category: Category | null;
 
   @Column()
   menu_name: string;
