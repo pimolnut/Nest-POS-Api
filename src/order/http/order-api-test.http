@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "customer_id": 123,
-  "order_date": "2023-09-17T08:00:00Z",
+  "order_date": "2023-09-18T08:00:00Z",
   "total_price": 500,
   "queue_number": 3,
   "status": "processing",

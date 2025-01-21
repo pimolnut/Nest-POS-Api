@@ -55,7 +55,7 @@ export class OrderService {
           owner_id: 2, // Hardcoded for now, can come from DTO
           total_revenue: createOrderDto.total_price,
           total_orders: 1,
-          canceled_orders: 1,
+          canceled_orders: 0,
           branch: { branch_id: 4 }, // Hardcoded for now, can come from DTO
         });
       } else {
@@ -65,7 +65,7 @@ export class OrderService {
           owner_id: 2, // Hardcoded for now, can come from DTO
           total_revenue: createOrderDto.total_price,
           total_orders: 1,
-          canceled_orders: 0,
+          canceled_orders: 1,
           branch: { branch_id: 4 }, // Hardcoded for now, can come from DTO
         });
       }
