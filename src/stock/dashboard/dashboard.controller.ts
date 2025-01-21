@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Overview } from './dto/overview.dto';
+import { Linegraph } from './dto/linegraph.dto';
 
 @Controller('owner')
 export class DashboardController {
@@ -10,5 +11,11 @@ export class DashboardController {
   async getStockSummary(@Param('date') date: string): Promise<Overview> {
     date = date + 'T08:00:00.000Z';
     return this.dashboardService.getStockSummary(new Date(date));
+  }
+
+  @Get('stock-sale/:date')
+  async getStockLineGraph(@Param('date') date: string): Promise<Linegraph> {
+    date = date + 'T08:00:00.000Z';
+    return this.dashboardService.getStockLineGraph(new Date(date));
   }
 }
