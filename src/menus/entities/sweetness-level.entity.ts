@@ -12,7 +12,6 @@ export class SweetnessLevel {
   @PrimaryGeneratedColumn()
   sweetness_id: number;
 
-  @Column()
   @Column({ nullable: false })
   level_name: string;
 

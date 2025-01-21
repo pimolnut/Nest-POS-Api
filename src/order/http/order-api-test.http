@@ -36,3 +36,6 @@ Content-Type: application/json
   "customer_name": "John Doe",
   "contact": "123456789"
 }
+
+### Get Order Item 
+GET http://localhost:3000/employee/orders/item

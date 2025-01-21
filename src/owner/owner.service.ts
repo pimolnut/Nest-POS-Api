@@ -19,7 +19,7 @@ export class OwnerService {
   constructor(
     @InjectRepository(Owner)
     private readonly ownerRepository: Repository<Owner>,
-  ) {}
+  ) { }
 
   // * Check for duplicate email before creating Owner
   async create(createOwnerDto: CreateOwnerDto): Promise<Owner> {
@@ -98,6 +98,7 @@ export class OwnerService {
   // * Login Owner
   async login(loginOwnerDto: LoginOwnerDto): Promise<Owner> {
     const owner = await this.findByEmail(loginOwnerDto.email);
+    console.log("LOGIN")
     if (!owner) {
       throw new UnauthorizedException('Invalid email or password');
     }

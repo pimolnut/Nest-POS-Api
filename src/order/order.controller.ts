@@ -18,7 +18,7 @@ import { CancelOrderDto } from './dto/cancel-order/Cancel-order.dto';
 
 @Controller('employee/orders')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -30,6 +30,13 @@ export class OrderController {
   @HttpCode(HttpStatus.OK)
   async findAll() {
     return this.orderService.findAll();
+  }
+
+  //--------- each order item in order --------//
+  @Get('/item')
+  @HttpCode(HttpStatus.OK)
+  async findAllOrderItems() {
+    return this.orderService.findAllOrderItems();
   }
 
   @Get(':id')
@@ -80,3 +87,6 @@ export class OrderController {
     return this.orderService.cancelOrder(id, cancelOrderDto);
   }
 }
+
+
+
