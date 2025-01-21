@@ -5,7 +5,7 @@ import { Order } from './entities/order.entity';
 import { CreateOrderDto } from './dto/create-order/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order/update-order.dto';
 import { CancelOrderDto } from './dto/cancel-order/Cancel-order.dto';
-import { SalesSummary } from 'src/dashboard/entities/sales_summary';
+import { SalesSummary } from 'src/stock/dashboard/entities/sales_summary';
 
 @Injectable()
 export class OrderService {
