@@ -6,9 +6,7 @@ import { BranchController } from './branch.controller';
 import { OwnerModule } from '../owner/owner.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Branch]),
-  OwnerModule,
-], 
+  imports: [TypeOrmModule.forFeature([Branch]), OwnerModule],
   controllers: [BranchController],
   providers: [BranchService],
   exports: [BranchService, TypeOrmModule],

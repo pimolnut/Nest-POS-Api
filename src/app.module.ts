@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from '../ormconfig';
-import { OrderModule } from './order/order.module';
+import { OrderModule } from './employee-side/order/order.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { OwnerModule } from './owner/owner.module';
-import { MenuModule } from './menus/menu.module';
-import { CategoryModule } from './category/category.module';
-import { BranchModule } from './branch/branch.module';
-import { DashboardModule } from './stock/dashboard/dashboard.module';
+import { OwnerModule } from './owner-side/owner/owner.module';
+import { MenuModule } from './owner-side/menus/menu.module';
+import { CategoryModule } from './owner-side/category/category.module';
+import { BranchModule } from './owner-side/branch/branch.module';
+import { DashboardModule } from './owner-side/stock/dashboard/dashboard.module';
 
 @Module({
   imports: [

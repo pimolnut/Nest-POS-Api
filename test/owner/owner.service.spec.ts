@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OwnerService } from '../../src/owner/owner.service';
+import { OwnerService } from '../../src/owner-side/owner/owner.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Owner } from '../../src/owner/entities/owner/owner.entity';
+import { Owner } from '../../src/owner-side/owner/entities/owner/owner.entity';
 import * as bcrypt from 'bcrypt';
 import { BadRequestException } from '@nestjs/common';
 

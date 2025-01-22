@@ -6,8 +6,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { Owner } from 'src/owner/entities/owner/owner.entity';
-import { Branch } from 'src/branch/entities/branch/branch.entity';
+import { Owner } from 'src/owner-side/owner/entities/owner/owner.entity';
+import { Branch } from 'src/owner-side/branch/entities/branch/branch.entity';
 
 @Entity()
 export class SalesSummary {

@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { Owner } from './entities/owner/owner.entity';
 import { CreateOwnerDto } from './dto/create-owner/create-owner.dto';
 import * as bcrypt from 'bcrypt';
-import { sendTemporaryPasswordEmail } from '../utils/send-email.util';
+import { sendTemporaryPasswordEmail } from '../../utils/send-email.util';
 import { UpdatePasswordDto } from './dto/update-password/update-password.dto';
 import { LoginOwnerDto } from './dto/login-owner/login-owner.dto';
 import { ForgotPasswordDto } from './dto/forgot-owner/forgot-owner.dto';
@@ -19,7 +19,7 @@ export class OwnerService {
   constructor(
     @InjectRepository(Owner)
     private readonly ownerRepository: Repository<Owner>,
-  ) { }
+  ) {}
 
   // * Check for duplicate email before creating Owner
   async create(createOwnerDto: CreateOwnerDto): Promise<Owner> {
@@ -98,7 +98,7 @@ export class OwnerService {
   // * Login Owner
   async login(loginOwnerDto: LoginOwnerDto): Promise<Owner> {
     const owner = await this.findByEmail(loginOwnerDto.email);
-    console.log("LOGIN")
+    console.log('LOGIN');
     if (!owner) {
       throw new UnauthorizedException('Invalid email or password');
     }

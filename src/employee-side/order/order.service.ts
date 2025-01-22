@@ -5,7 +5,7 @@ import { Order } from './entities/order.entity';
 import { CreateOrderDto } from './dto/create-order/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order/update-order.dto';
 import { CancelOrderDto } from './dto/cancel-order/Cancel-order.dto';
-import { SalesSummary } from 'src/stock/dashboard/entities/sales_summary';
+import { SalesSummary } from 'src/owner-side/stock/dashboard/entities/sales_summary';
 import { OrderItem } from './entities/order-item.entity';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class OrderService {
     private salesSummaryRepository: Repository<SalesSummary>,
     @InjectRepository(OrderItem)
     private orderItemRepository: Repository<OrderItem>,
-  ) { }
+  ) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     // Convert order_date to Date if it's a string
@@ -163,10 +163,16 @@ export class OrderService {
       order: {
         order_item_id: 'ASC',
       },
-      relations: ['menu_id', 'sweetness_id', 'menu_type_id', 'add_on_id', 'size_id'],
+      relations: [
+        'menu_id',
+        'sweetness_id',
+        'menu_type_id',
+        'add_on_id',
+        'size_id',
+      ],
     });
 
-    return orderItems.map(orderItem => ({
+    return orderItems.map((orderItem) => ({
       order_item_id: orderItem.order_item_id,
       quantity: orderItem.quantity,
       price: orderItem.price,
@@ -176,7 +182,7 @@ export class OrderService {
       level_name: orderItem.sweetness_id.level_name,
       type_name: orderItem.menu_type_id.type_name,
       add_on_name: orderItem.add_on_id[0]?.add_on_name,
-      size_name: orderItem.size_id.size_name
+      size_name: orderItem.size_id.size_name,
     }));
   }
 }

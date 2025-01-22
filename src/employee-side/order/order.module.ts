@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
 import { Order } from './entities/order.entity';
-import { SalesSummary } from 'src/stock/dashboard/entities/sales_summary';
+import { SalesSummary } from 'src/owner-side/stock/dashboard/entities/sales_summary';
 import { OrderItem } from './entities/order-item.entity';
 
 @Module({
@@ -11,4 +11,4 @@ import { OrderItem } from './entities/order-item.entity';
   controllers: [OrderController],
   providers: [OrderService],
 })
-export class OrderModule { }
+export class OrderModule {}
